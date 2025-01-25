@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+
 }
 
 android {
@@ -55,6 +56,12 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:$fragment_version")
 
     implementation ("com.google.android.material:material:1.9.0")
+
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+
+    implementation ("com.google.code.gson:gson:2.11.0")
 
 
 }
