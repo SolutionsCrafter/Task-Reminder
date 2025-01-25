@@ -2,6 +2,7 @@ package com.example.collegealerts
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -27,6 +28,28 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this,addTask::class.java))
         }
 
+        // Retrieve data passed via intent
+        val taskTitle = intent.getStringExtra("task_title")
+        val taskDate = intent.getStringExtra("task_date")
+        val taskTime = intent.getStringExtra("task_time")
+
+        // Create a new fragment instance
+        val homeFragment = HomeFragment()
+
+        // Pass the data to the fragment using a Bundle
+        val bundle = Bundle()
+        bundle.putString("task_title", taskTitle)
+        bundle.putString("task_date", taskDate)
+        bundle.putString("task_time", taskTime)
+
+        // Set the arguments for the fragment
+        homeFragment.arguments = bundle
+
+        // Begin the fragment transaction to add the fragment to the activity
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.frag_view, homeFragment)
+            .addToBackStack(null)
+            .commit()
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -42,13 +65,26 @@ class MainActivity : AppCompatActivity() {
         val calendarFragment=CalendarFragment()
         val alertFragment=AlertFragment()
         val settingsFragment=SettingsFragment()
+        val title = findViewById<TextView>(R.id.pageTitle)
 
         navBar.setOnNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.menu_home->setCurrentFragment(homeFragment)
-                R.id.menu_calendar->setCurrentFragment(calendarFragment)
-                R.id.menu_alerts->setCurrentFragment(alertFragment)
-                R.id.menu_settings->setCurrentFragment(settingsFragment)
+                R.id.menu_home->{
+                    setCurrentFragment(homeFragment)
+                    title.text = "Home"
+                }
+                R.id.menu_calendar->{
+                    setCurrentFragment(calendarFragment)
+                    title.text = "Calendar"}
+                R.id.menu_alerts->{
+                    setCurrentFragment(alertFragment)
+                    title.text = "Alerts"
+                }
+                R.id.menu_settings->{
+                    setCurrentFragment(settingsFragment)
+                    title.text = "Settings"
+                }
+
             }
             true
         }

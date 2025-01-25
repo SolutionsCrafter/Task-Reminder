@@ -39,12 +39,12 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="42dp"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="42dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
-        tools:srcCompat="@drawable/img_add_task" />
+        android:src="@drawable/img_add_task" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -84,7 +84,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                    android:id="@+id/editTextDate2"
+                    android:id="@+id/edTask"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -117,17 +117,31 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/editTextDate21"
+                <TextView
+                    android:id="@+id/tvDate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:layout_marginEnd="60dp"
                     android:hint="Task date"
-                    android:inputType="date"
+                    android:textSize="21dp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView41"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView41"
                     app:layout_constraintTop_toTopOf="@+id/textView41" />
+
+                <ImageButton
+                    android:id="@+id/imgBtnCalendar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvDate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvDate"
+                    app:layout_constraintTop_toTopOf="@+id/tvDate"
+                    app:srcCompat="@drawable/calendar"
+                    app:tint="@color/black"
+                    android:background="@color/white"
+                    android:clickable="true"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -151,17 +165,31 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/editTextDate211"
+                <TextView
+                    android:id="@+id/tvTime"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:layout_marginEnd="60dp"
                     android:hint="Task time"
-                    android:inputType="time"
+                    android:textSize="21dp"
                     app:layout_constraintBottom_toBottomOf="@+id/textView411"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView411"
                     app:layout_constraintTop_toTopOf="@+id/textView411" />
+
+                <ImageView
+                    android:id="@+id/imgBtnTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvTime"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tvTime"
+                    app:layout_constraintTop_toTopOf="@+id/tvTime"
+                    app:srcCompat="@drawable/time_filled"
+                    app:tint="@color/black"
+                    android:background="@color/white"
+                    android:clickable="true"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -170,7 +198,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
+        android:id="@+id/btnSave"
         android:layout_width="match_parent"
         style="@android:style/Widget.Button"
         android:layout_marginHorizontal="20dp"
