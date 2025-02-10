@@ -40,7 +40,14 @@ class HomeFragment : Fragment() {
         )
 
         // Initialize adapter
-        itemAdapter = ItemAdapter(sampleData)
+        itemAdapter = ItemAdapter(sampleData,
+            onDeleteClick = { task ->
+                deleteTask(task)  // Handle delete functionality
+            },
+            onAlertClick = { task ->
+                setAlertForTask(task)  // Handle alert functionality
+            }
+        )
         recyclerView.adapter = itemAdapter
 
         // Load data from the database
@@ -58,8 +65,28 @@ class HomeFragment : Fragment() {
     }
 
     // Function to add new data if needed
-    fun addNewData(newData: Datas) {
+    private fun addNewData(newData: Datas) {
         sampleData.add(newData)
         itemAdapter.notifyItemInserted(sampleData.size - 1)
     }
+
+    // Handle delete functionality
+    private fun deleteTask(task: Datas) {
+        val deleted = databaseHelper.deleteTask(task) // Call the delete function from DatabaseHelper
+        if (deleted > 0) {
+            sampleData.remove(task) // Remove from the list
+            itemAdapter.notifyDataSetChanged() // Notify the adapter
+            Toast.makeText(requireContext(), "Task deleted!", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireContext(), "Failed to delete task", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    // Function to handle setting an alert for a task
+    private fun setAlertForTask(task: Datas) {
+        // Logic to set an alert (e.g., show notification or reminder)
+        Toast.makeText(requireContext(), "Alert set for task: ${task.taskData}", Toast.LENGTH_SHORT).show()
+    }
+
 }

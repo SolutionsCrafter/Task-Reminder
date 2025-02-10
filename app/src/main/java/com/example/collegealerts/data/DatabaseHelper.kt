@@ -67,4 +67,15 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db.close()
         return result
     }
+
+    // Method to delete task by taskData
+    fun deleteTask(task: Datas): Int {
+        val db = writableDatabase
+        val selection = "$COLUMN_TASK = ?"
+        val selectionArgs = arrayOf(task.taskData)  // Using the task's data for deletion
+        val rowsDeleted = db.delete(TABLE_NAME, selection, selectionArgs)
+        db.close()
+        return rowsDeleted
+    }
+
 }
