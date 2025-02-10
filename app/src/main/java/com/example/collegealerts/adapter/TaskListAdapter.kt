@@ -11,13 +11,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.collegealerts.R
 import com.example.collegealerts.data.Datas
 
-class ItemAdapter(private val itemList: List<Datas>) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+class ItemAdapter(
+    private val itemList: List<Datas>,
+    private val onDeleteClick: (Datas) -> Unit, // Lambda for delete functionality
+    private val onAlertClick: (Datas) -> Unit  // Lambda for alert functionality (optional)
+) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //val imageView: ImageView = itemView.findViewById(R.id.imageView21)
         val task: TextView = itemView.findViewById(R.id.textView111)
         val date: TextView = itemView.findViewById(R.id.textView21)
         val time: TextView = itemView.findViewById(R.id.textView5)
+        val alert: ImageView = itemView.findViewById(R.id.imgSetAlert)
+        val delete: TextView = itemView.findViewById(R.id.tvDeleteTask)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -32,7 +38,18 @@ class ItemAdapter(private val itemList: List<Datas>) : RecyclerView.Adapter<Item
         holder.date.text = currentItem.dateData
         holder.time.text = currentItem.timeData
 
+        holder.alert.setOnClickListener {
+            onAlertClick(currentItem)
+        }
+
+        holder.delete.setOnClickListener {
+            onDeleteClick(currentItem)
+        }
+
     }
 
     override fun getItemCount() = itemList.size
+
+
+
 }

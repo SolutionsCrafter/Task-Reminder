@@ -1,7 +1,10 @@
 package com.example.collegealerts
 
+import android.app.AlarmManager
 import android.app.DatePickerDialog
+import android.app.PendingIntent
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,34 +17,38 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.collegealerts.data.DatabaseHelper
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 class addTask : AppCompatActivity() {
 
-    lateinit var btnCalendar:ImageView
-    lateinit var tvDate:TextView
-    lateinit var btnTime:ImageView
-    lateinit var tvTime:TextView
-    lateinit var btnSave:Button
+    lateinit var btnCalendar: ImageView
+    lateinit var tvDate: TextView
+    lateinit var btnTime: ImageView
+    lateinit var tvTime: TextView
+    lateinit var btnSave: Button
+    private lateinit var databaseHelper: DatabaseHelper
 
-    var task:String = ""
-    var date:String = ""
-    var time:String = ""
+    var task: String = ""
+    var date: String = ""
+    var time: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_add_task)
 
+        // Initialize the database
+        databaseHelper = DatabaseHelper(this)
+
         btnCalendar = findViewById(R.id.imgBtnCalendar)
         tvDate = findViewById(R.id.tvDate)
-        btnTime= findViewById(R.id.imgBtnTime)
+        btnTime = findViewById(R.id.imgBtnTime)
         tvTime = findViewById(R.id.tvTime)
         val etTask = findViewById<EditText>(R.id.edTask)
 
-        //task = etTask.text.toString()
         pickDate()
         pickTime()
 
@@ -52,13 +59,12 @@ class addTask : AppCompatActivity() {
             time = tvTime.text.toString()
 
             if (task.isNotEmpty() && date.isNotEmpty() && time.isNotEmpty()) {
-                passData()
+                saveToDatabase(task, date, time)
                 etTask.text.clear()
                 tvDate.text = ""
                 tvTime.text = ""
-                Toast.makeText(this, "Data added successfully!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Task added to database!", Toast.LENGTH_SHORT).show()
             } else {
-
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
         }
@@ -70,7 +76,7 @@ class addTask : AppCompatActivity() {
         }
     }
 
-    private fun pickDate(){
+    private fun pickDate() {
         btnCalendar.setOnClickListener {
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
@@ -79,10 +85,8 @@ class addTask : AppCompatActivity() {
 
             val datePickerDialog = DatePickerDialog(
                 this,
-                { view, year, monthOfYear, dayOfMonth ->
-                    tvDate.text =
-                        (dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
-                    date = (dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
+                { _, year, monthOfYear, dayOfMonth ->
+                    tvDate.text = "$dayOfMonth-${monthOfYear + 1}-$year"
                 },
                 year,
                 month,
@@ -92,22 +96,20 @@ class addTask : AppCompatActivity() {
         }
     }
 
-    private fun pickTime(){
+    private fun pickTime() {
         btnTime.setOnClickListener {
             val c = Calendar.getInstance()
             val hour = c.get(Calendar.HOUR_OF_DAY)
             val minute = c.get(Calendar.MINUTE)
             val timePickerDialog = TimePickerDialog(
                 this,
-                { view, hourOfDay, minute ->
-                    tvTime.setText("$hourOfDay:$minute")
+                { _, hourOfDay, minute ->
                     val selectedTime = Calendar.getInstance()
+                    selectedTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                    selectedTime.set(Calendar.MINUTE, minute)
 
                     val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
-                    val formattedTime = timeFormat.format(selectedTime.time)
-
-                    tvTime.text = formattedTime
-                    time = formattedTime
+                    tvTime.text = timeFormat.format(selectedTime.time)
                 },
                 hour,
                 minute,
@@ -117,32 +119,56 @@ class addTask : AppCompatActivity() {
         }
     }
 
-    private fun passData() {
+    private fun saveToDatabase(task: String, date: String, time: String) {
+        val rowId = databaseHelper.insertTask(task, date, time)
+        if (rowId != -1L) {
+            Log.d("addTask", "Task saved to database: $task, $date, $time")
 
-        // Check the data before passing it
-        Log.d("addTask", "Task: $task, Date: $date, Time: $time")
+            // Convert the date and time into a Calendar object
+            val calendar = Calendar.getInstance()
+            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
 
-        val intent = Intent(this, MainActivity::class.java)
+            try {
+                // Set the date and time from the selected task details
+                calendar.time = dateFormat.parse(date) ?: Calendar.getInstance().time
+                val timeParts = time.split(" ")
+                val timeSplit = timeParts[0].split(":")
+                calendar.set(Calendar.HOUR_OF_DAY, timeSplit[0].toInt())
+                calendar.set(Calendar.MINUTE, timeSplit[1].toInt())
 
-        // Pass data with the intent
-        intent.putExtra("task_title", task)
-        intent.putExtra("task_date", date)
-        intent.putExtra("task_time", time)
+                // Schedule the notification
+                scheduleNotification(task, time, calendar.timeInMillis)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
 
-        // Start the HomeActivity
-        startActivity(intent)
-
-        // Set the bundle as arguments to the fragment
-        //homeFragment.arguments = bundle
-
-        // Replace or add the fragment
-        //supportFragmentManager.beginTransaction()
-            //.replace(R.id.frag_view, homeFragment) // Make sure 'fragment_container' is correct
-            //.addToBackStack(null) // Add to back stack if you want to navigate back
-            //.commit()
-
-        // Log that the data has been passed
-        Log.d("addTask", "Data passed to fragment.")
+            // Navigate back to MainActivity
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        } else {
+            Toast.makeText(this, "Failed to save task", Toast.LENGTH_SHORT).show()
+        }
     }
+
+
+    private fun scheduleNotification(task: String, time: String, triggerTime: Long) {
+        val intent = Intent(this, NotificationReceiver::class.java)
+        intent.putExtra("TASK", task)
+        intent.putExtra("TIME", time)
+
+        // Create a PendingIntent
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        // Get the AlarmManager system service
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        // Schedule the alarm
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent)
+
+        Toast.makeText(this, "Reminder set for $task at $time", Toast.LENGTH_SHORT).show()
+    }
+
+
 
 }

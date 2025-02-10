@@ -16,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -23,32 +24,31 @@ class MainActivity : AppCompatActivity() {
 
         fragmentAndNavBarInit()
 
-        val fab = findViewById<FloatingActionButton>(R.id.fbtn)
+        var fab = findViewById<FloatingActionButton>(R.id.fbtn)
         fab.setOnClickListener {
             startActivity(Intent(this,addTask::class.java))
         }
+
+        // Create a new fragment instance
+        val homeFragment = HomeFragment()
 
         // Retrieve data passed via intent
         val taskTitle = intent.getStringExtra("task_title")
         val taskDate = intent.getStringExtra("task_date")
         val taskTime = intent.getStringExtra("task_time")
 
-        // Create a new fragment instance
-        val homeFragment = HomeFragment()
-
-        // Pass the data to the fragment using a Bundle
+        // Pass data using a Bundle
         val bundle = Bundle()
         bundle.putString("task_title", taskTitle)
         bundle.putString("task_date", taskDate)
         bundle.putString("task_time", taskTime)
 
-        // Set the arguments for the fragment
+        // Set arguments to the Fragment
         homeFragment.arguments = bundle
 
-        // Begin the fragment transaction to add the fragment to the activity
+        // Replace or add the Fragment to the container
         supportFragmentManager.beginTransaction()
             .replace(R.id.frag_view, homeFragment)
-            .addToBackStack(null)
             .commit()
 
 

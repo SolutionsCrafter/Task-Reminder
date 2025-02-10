@@ -7,19 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.collegealerts.MainActivity
 import com.example.collegealerts.R
 import com.example.collegealerts.adapter.ItemAdapter
+import com.example.collegealerts.data.DatabaseHelper
 import com.example.collegealerts.data.Datas
 
-
 class HomeFragment : Fragment() {
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var itemAdapter: ItemAdapter
     private val sampleData = mutableListOf<Datas>()
+    private lateinit var databaseHelper: DatabaseHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,21 +28,8 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-
-        // Retrieve the passed arguments
-        val taskTitle = arguments?.getString("task_title")
-        val taskDate = arguments?.getString("task_date")
-        val taskTime = arguments?.getString("task_time")
-
-        // Create a Datas object and add to list if not null
-        if (taskTitle != null && taskDate != null && taskTime != null) {
-            val newData = Datas(taskTitle, taskDate, taskTime)
-            sampleData.add(newData)
-
-        }
-
-        Log.d("HomeFragment", "Received task: $taskTitle, Date: $taskDate, Time: $taskTime")
-
+        // Initialize DatabaseHelper
+        databaseHelper = DatabaseHelper(requireContext())
 
         // Setup RecyclerView
         recyclerView = view.findViewById(R.id.rvTasks)
@@ -53,16 +40,53 @@ class HomeFragment : Fragment() {
         )
 
         // Initialize adapter
-        itemAdapter = ItemAdapter(sampleData)
+        itemAdapter = ItemAdapter(sampleData,
+            onDeleteClick = { task ->
+                deleteTask(task)  // Handle delete functionality
+            },
+            onAlertClick = { task ->
+                setAlertForTask(task)  // Handle alert functionality
+            }
+        )
         recyclerView.adapter = itemAdapter
+
+        // Load data from the database
+        loadDataFromDatabase()
 
         return view
     }
 
+    // Function to load data from database
+    private fun loadDataFromDatabase() {
+        val tasks = databaseHelper.getAllTasks() // Fetch tasks from database
+        sampleData.clear() // Clear old data
+        sampleData.addAll(tasks) // Add new data to the list
+        itemAdapter.notifyDataSetChanged() // Notify adapter about the change
+    }
+
     // Function to add new data if needed
-    //fun addNewData(newData: Datas) {
-        //sampleData.add(newData)
-        //itemAdapter.notifyItemInserted(sampleData.size - 1)
-    //}
+    private fun addNewData(newData: Datas) {
+        sampleData.add(newData)
+        itemAdapter.notifyItemInserted(sampleData.size - 1)
+    }
+
+    // Handle delete functionality
+    private fun deleteTask(task: Datas) {
+        val deleted = databaseHelper.deleteTask(task) // Call the delete function from DatabaseHelper
+        if (deleted > 0) {
+            sampleData.remove(task) // Remove from the list
+            itemAdapter.notifyDataSetChanged() // Notify the adapter
+            Toast.makeText(requireContext(), "Task deleted!", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireContext(), "Failed to delete task", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    // Function to handle setting an alert for a task
+    private fun setAlertForTask(task: Datas) {
+        // Logic to set an alert (e.g., show notification or reminder)
+        Toast.makeText(requireContext(), "Alert set for task: ${task.taskData}", Toast.LENGTH_SHORT).show()
+    }
 
 }
