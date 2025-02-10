@@ -1,6 +1,8 @@
 package com.example.collegealerts.adapter
 
+import android.app.AlertDialog
 import android.content.ClipData
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,17 +41,33 @@ class ItemAdapter(
         holder.time.text = currentItem.timeData
 
         holder.alert.setOnClickListener {
+
             onAlertClick(currentItem)
         }
 
         holder.delete.setOnClickListener {
-            onDeleteClick(currentItem)
+            showDeleteConfirmationDialog(holder.itemView.context, position)
         }
 
     }
 
     override fun getItemCount() = itemList.size
 
+    private fun showDeleteConfirmationDialog(context: Context, position: Int) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Are you sure")
+        val currentItem = itemList[position]
 
+        builder.setPositiveButton("Yes") { dialog, _ ->
+            onDeleteClick(currentItem)
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.show()
+    }
 
 }
