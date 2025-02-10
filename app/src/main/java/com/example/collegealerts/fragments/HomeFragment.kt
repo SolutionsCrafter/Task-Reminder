@@ -85,8 +85,9 @@ class HomeFragment : Fragment() {
 
     // Function to handle setting an alert for a task
     private fun setAlertForTask(task: Datas) {
-        // Logic to set an alert (e.g., show notification or reminder)
-        Toast.makeText(requireContext(), "Alert set for task: ${task.taskData}", Toast.LENGTH_SHORT).show()
+
     }
+
+
 
 }
