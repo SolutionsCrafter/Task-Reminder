@@ -1,7 +1,9 @@
 package com.example.collegealerts
 
+import CalendarFragment
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -9,13 +11,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.collegealerts.fragments.AlertFragment
-import com.example.collegealerts.fragments.CalendarFragment
 import com.example.collegealerts.fragments.HomeFragment
 import com.example.collegealerts.fragments.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var fab:FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         fragmentAndNavBarInit()
 
-        var fab = findViewById<FloatingActionButton>(R.id.fbtn)
+        fab = findViewById<FloatingActionButton>(R.id.fbtn)
         fab.setOnClickListener {
             startActivity(Intent(this,addTask::class.java))
         }
@@ -72,17 +75,22 @@ class MainActivity : AppCompatActivity() {
                 R.id.menu_home->{
                     setCurrentFragment(homeFragment)
                     title.text = "Home"
+                    fab.visibility = View.VISIBLE
                 }
                 R.id.menu_calendar->{
                     setCurrentFragment(calendarFragment)
-                    title.text = "Calendar"}
+                    title.text = "Calendar"
+                    fab.visibility = View.GONE
+                }
                 R.id.menu_alerts->{
                     setCurrentFragment(alertFragment)
                     title.text = "Alerts"
+                    fab.visibility = View.GONE
                 }
                 R.id.menu_settings->{
                     setCurrentFragment(settingsFragment)
                     title.text = "Settings"
+                    fab.visibility = View.GONE
                 }
 
             }

@@ -78,4 +78,28 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return rowsDeleted
     }
 
+    // Method to fetch tasks by date
+    // Method to fetch tasks based on a selected date
+    fun getTasksByDate(date: String): List<Datas> {
+        val taskList = mutableListOf<Datas>()
+        val db = readableDatabase
+        val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_DATE = ?"
+        val cursor = db.rawQuery(query, arrayOf(date))
+
+        if (cursor.moveToFirst()) {
+            do {
+                val task = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TASK))
+                val taskDate = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE))
+                val taskTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIME))
+                taskList.add(Datas(task, taskDate, taskTime))
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+        return taskList
+    }
+
+
+
 }

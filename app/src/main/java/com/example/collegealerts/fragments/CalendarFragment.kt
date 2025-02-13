@@ -1,60 +1,139 @@
-package com.example.collegealerts.fragments
-
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CalendarView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Visibility
 import com.example.collegealerts.R
+import com.example.collegealerts.adapter.FilterdTaskAdapter
+import com.example.collegealerts.data.DatabaseHelper
+import com.example.collegealerts.data.Datas
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CalendarFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CalendarFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var selectedDate: String
+    private lateinit var calendar: CalendarView
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var filterdItemAdapter: FilterdTaskAdapter
+    private var filterdData = mutableListOf<Datas>()
+    private lateinit var databaseHelper: DatabaseHelper
+    private lateinit var tvNoTasks: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_calendar, container, false)
+
+        Log.d("CalendarFragment", "onCreateView started")
+
+        val view = inflater.inflate(R.layout.fragment_calendar, container, false)
+
+        // Initialize DatabaseHelper
+        databaseHelper = DatabaseHelper(requireContext())
+        Log.d("CalendarFragment", "DatabaseHelper initialized")
+
+        tvNoTasks = view.findViewById(R.id.tvNoTasks)
+        calendar = view.findViewById(R.id.calendarView)
+
+        val selectedDateMillis = calendar.date
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        selectedDate = sdf.format(Date(selectedDateMillis))
+        Log.d("CalendarFragment", "Selected initial date: $selectedDate")
+
+        view.findViewById<TextView>(R.id.tvTask).text = "List for ${selectedDate}"
+
+        // Setup RecyclerView
+        recyclerView = view.findViewById(R.id.rvfilterd)
+        recyclerView.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        Log.d("CalendarFragment", "RecyclerView set up")
+
+        // Initialize adapter
+        filterdItemAdapter = FilterdTaskAdapter(filterdData,
+            onDeleteClick = { task ->
+                deleteTask(task)  // Handle delete functionality
+            },
+            onAlertClick = { task ->
+                //setAlertForTask(task)  // Handle alert functionality
+            }
+        )
+        recyclerView.adapter = filterdItemAdapter
+        Log.d("CalendarFragment", "Adapter initialized")
+
+        loadTasksForDate(selectedDate)
+
+        calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            val cal = Calendar.getInstance()
+            cal.set(year, month, dayOfMonth) // Set selected date
+            this.selectedDate = sdf.format(cal.time) // Format properly
+            Log.d("CalendarFragment", "Date changed: $selectedDate")
+            view.findViewById<TextView>(R.id.tvTask).text = "List for ${selectedDate}"
+            // Load data from the database
+            loadTasksForDate(selectedDate)
+        }
+
+        Log.d("CalendarFragment", "onCreateView completed")
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CalendarFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CalendarFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun loadTasksForDate(date: String) {
+        Log.d("CalendarFragment", "Loading tasks for date: $date")
+
+        val tasks = databaseHelper.getTasksByDate(date)
+        Log.d("CalendarFragment", "Number of tasks fetched: ${tasks.size}")
+
+        // Clear the old list and add new tasks
+        filterdData.clear()
+        filterdData.addAll(tasks)
+
+        // Log after updating the list of tasks
+        Log.d("CalendarFragment", "Updated task list size: ${filterdData.size}")
+
+        val allTasks = databaseHelper.getAllTasks()
+        Log.d("CalendarFragment", "All tasks in DB: $allTasks")
+
+        // If no tasks are available, show a Toast
+        if (filterdData.isEmpty()) {
+            recyclerView.visibility = View.GONE
+            tvNoTasks.visibility = View.VISIBLE
+        }else{
+            tvNoTasks.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+            // Notify the adapter that the data has changed
+            filterdItemAdapter.notifyDataSetChanged()
+            Log.d("CalendarFragment", "RecyclerView adapter notified")
+        }
+
+    }
+
+    //TODO edit tasks
+
+    // Handle delete functionality
+    private fun deleteTask(task: Datas) {
+        Log.d("CalendarFragment", "Attempting to delete task: $task")
+        val deleted = databaseHelper.deleteTask(task) // Call the delete function from DatabaseHelper
+        if (deleted > 0) {
+            filterdData.remove(task) // Remove from the list
+            filterdItemAdapter.notifyDataSetChanged() // Notify the adapter
+            Toast.makeText(requireContext(), "Task deleted!", Toast.LENGTH_SHORT).show()
+            Log.d("CalendarFragment", "Task deleted successfully")
+        } else {
+            Toast.makeText(requireContext(), "Failed to delete task", Toast.LENGTH_SHORT).show()
+            Log.d("CalendarFragment", "Failed to delete task")
+        }
     }
 }

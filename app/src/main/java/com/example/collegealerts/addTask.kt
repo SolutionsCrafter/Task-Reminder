@@ -85,8 +85,10 @@ class addTask : AppCompatActivity() {
 
             val datePickerDialog = DatePickerDialog(
                 this,
-                { _, year, monthOfYear, dayOfMonth ->
-                    tvDate.text = "$dayOfMonth-${monthOfYear + 1}-$year"
+                { _, selectedYear, selectedMonth, selectedDay ->
+                    // ✅ Ensures two-digit day and month format (e.g., 05-08-2024)
+                    val formattedDate = String.format("%02d/%02d/%04d", selectedDay, selectedMonth + 1, selectedYear)
+                    tvDate.text = formattedDate
                 },
                 year,
                 month,
@@ -95,6 +97,7 @@ class addTask : AppCompatActivity() {
             datePickerDialog.show()
         }
     }
+
 
     private fun pickTime() {
         btnTime.setOnClickListener {
@@ -126,7 +129,7 @@ class addTask : AppCompatActivity() {
 
             // Convert the date and time into a Calendar object
             val calendar = Calendar.getInstance()
-            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val timeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
 
             try {
