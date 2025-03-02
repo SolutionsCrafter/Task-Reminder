@@ -1,99 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        app:cardCornerRadius="20dp"
-        android:layout_marginHorizontal="14dp"
-        android:layout_marginVertical="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="6dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:background="#dfebf6">
+            android:layout_height="wrap_content"
+            android:background="@drawable/task_gradient_background"
+            android:padding="12dp">
 
-            <!--ImageView
-                android:id="@+id/imageView21"
-                tools:src="@tools:sample/avatars"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="20dp"
+            <!-- Priority Indicator -->
+            <View
+                android:id="@+id/viewPriorityIndicator"
+                android:layout_width="3dp"
+                android:layout_height="0dp"
+                android:background="#FF4081"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" /-->
-
-            <TextView
-                android:id="@+id/textView111"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Task :"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!-- Task Title -->
             <TextView
-                android:id="@+id/textView21"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvTaskTitle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Date :"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="0dp"
-                android:textColor="#2f6ea7"
-                android:textSize="17dp"
-                android:maxLines="2"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="8dp"
                 android:ellipsize="end"
-                android:layout_marginVertical="10dp"
-                app:layout_constraintStart_toStartOf="@+id/textView111"
-                app:layout_constraintTop_toBottomOf="@+id/textView111" />
-
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Time :"
-                android:layout_marginTop="5dp"
-                android:layout_marginStart="0dp"
-                android:textColor="#2f6ea7"
-                android:layout_marginVertical="10dp"
-                android:textSize="17sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView21" />
-
-            <ImageView
-                android:id="@+id/imgSetAlert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
-                android:clickable="true"
-                app:layout_constraintBottom_toTopOf="@+id/textView21"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView111"
-                app:srcCompat="@drawable/menu_alert" />
-
-            <TextView
-                android:id="@+id/tvDeleteTask"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/alkatra"
-                android:text="Delete"
-                android:textSize="17dp"
+                android:maxLines="1"
+                android:textColor="#1A237E"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:clickable="true"
+                app:layout_constraintEnd_toStartOf="@+id/taskCompletionLayout"
+                app:layout_constraintStart_toEndOf="@+id/viewPriorityIndicator"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Complete Project Presentation" />
+
+            <!-- Date and Time Container - Simplified -->
+            <LinearLayout
+                android:id="@+id/layoutDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/time_and_date_backgroung"
+                android:orientation="horizontal"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="4dp"
+                app:layout_constraintStart_toStartOf="@+id/tvTaskTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvTaskTitle">
+
+                <!-- Date -->
+                <ImageView
+                    android:id="@+id/ivCalendar"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/calendar"
+                    app:tint="#5C6BC0" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:textColor="#5C6BC0"
+                    android:textSize="12sp"
+                    tools:text="May 20, 2024" />
+
+                <!-- Time -->
+                <ImageView
+                    android:id="@+id/ivClock"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/time"
+                    app:tint="#5C6BC0" />
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:textColor="#5C6BC0"
+                    android:textSize="12sp"
+                    tools:text="2:30 PM" />
+
+            </LinearLayout>
+
+            <!-- Action Buttons - More Compact -->
+            <LinearLayout
+                android:id="@+id/actionButtons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/imgSetAlert" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutDateTime">
+
+                <ImageButton
+                    android:id="@+id/btnEdit"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/circle_btn_bg"
+                    android:padding="6dp"
+                    android:src="@drawable/edit_note"
+                    app:tint="#5C6BC0" />
+
+                <ImageButton
+                    android:id="@+id/btnDelete"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@drawable/circle_btn_bg"
+                    android:padding="6dp"
+                    android:src="@drawable/icon_delete"
+                    app:tint="#FF4081" />
+
+                <ImageButton
+                    android:id="@+id/btnAlert"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/circle_btn_bg"
+                    android:padding="6dp"
+                    android:src="@drawable/menu_alert"
+                    app:tint="#FFA000" />
+
+            </LinearLayout>
+
+            <!-- Improved Completion Checkbox with Label -->
+            <LinearLayout
+                android:id="@+id/taskCompletionLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/completion_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Done"
+                    android:textColor="#5C6BC0"
+                    android:textSize="12sp" />
+
+                <CheckBox
+                    android:id="@+id/checkboxComplete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:button="@drawable/check_box_off"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp" />
+
+
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

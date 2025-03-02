@@ -4,9 +4,11 @@ import CalendarFragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -27,10 +29,10 @@ class MainActivity : AppCompatActivity() {
 
         fragmentAndNavBarInit()
 
-        fab = findViewById<FloatingActionButton>(R.id.fbtn)
-        fab.setOnClickListener {
-            startActivity(Intent(this,addTask::class.java))
-        }
+//        fab = findViewById<FloatingActionButton>(R.id.fbtn)
+//        fab.setOnClickListener {
+//            startActivity(Intent(this,addTask::class.java))
+//        }
 
         // Create a new fragment instance
         val homeFragment = HomeFragment()
@@ -68,29 +70,39 @@ class MainActivity : AppCompatActivity() {
         val calendarFragment=CalendarFragment()
         val alertFragment=AlertFragment()
         val settingsFragment=SettingsFragment()
-        val title = findViewById<TextView>(R.id.pageTitle)
+        //val title = findViewById<TextView>(R.id.pageTitle)
+        //val pageBackBtn = findViewById<ImageView>(R.id.pageBackBtn)
+
+        val toolbar = findViewById<Toolbar>(R.id.appBar)
+        val greetingText = findViewById<TextView>(R.id.greetingText)
+        greetingText.text = "Hello, Channa 👋"
+
 
         navBar.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.menu_home->{
                     setCurrentFragment(homeFragment)
-                    title.text = "Home"
-                    fab.visibility = View.VISIBLE
+                    //title.text = "Home"
+                    //fab.visibility = View.GONE
+                    //pageBackBtn.visibility = View.GONE
                 }
                 R.id.menu_calendar->{
                     setCurrentFragment(calendarFragment)
-                    title.text = "Calendar"
-                    fab.visibility = View.GONE
+                    //title.text = "Calendar"
+                    //fab.visibility = View.GONE
+                    //pageBackBtn.visibility = View.VISIBLE
                 }
                 R.id.menu_alerts->{
                     setCurrentFragment(alertFragment)
-                    title.text = "Alerts"
-                    fab.visibility = View.GONE
+                    //title.text = "Alerts"
+                    //fab.visibility = View.GONE
+                    //pageBackBtn.visibility = View.VISIBLE
                 }
                 R.id.menu_settings->{
                     setCurrentFragment(settingsFragment)
-                    title.text = "Settings"
-                    fab.visibility = View.GONE
+                    //title.text = "Settings"
+                    //fab.visibility = View.GONE
+                    //pageBackBtn.visibility = View.VISIBLE
                 }
 
             }

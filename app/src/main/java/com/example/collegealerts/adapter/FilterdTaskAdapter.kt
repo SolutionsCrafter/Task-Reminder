@@ -1,15 +1,19 @@
 package com.example.collegealerts.adapter
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.collegealerts.R
 import com.example.collegealerts.data.Datas
+import com.example.collegealerts.edit_task
 
 class FilterdTaskAdapter(
     private val itemList: MutableList<Datas>, // ✅ Changed to MutableList for item removal
@@ -18,11 +22,12 @@ class FilterdTaskAdapter(
 ) : RecyclerView.Adapter<FilterdTaskAdapter.ItemViewHolder>() { // ✅ Fixed ViewHolder reference
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val task: TextView = itemView.findViewById(R.id.textView111)
-        val date: TextView = itemView.findViewById(R.id.textView21)
-        val time: TextView = itemView.findViewById(R.id.textView5)
-        val alert: ImageView = itemView.findViewById(R.id.imgSetAlert)
-        val delete: TextView = itemView.findViewById(R.id.tvDeleteTask)
+        val task: TextView = itemView.findViewById(R.id.tvTaskTitle)
+        val date: TextView = itemView.findViewById(R.id.tvDate)
+        val time: TextView = itemView.findViewById(R.id.tvTime)
+        val alert: ImageButton = itemView.findViewById(R.id.btnAlert)
+        val delete: ImageButton = itemView.findViewById(R.id.btnDelete)
+        val edit: ImageButton = itemView.findViewById(R.id.btnEdit)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -45,6 +50,21 @@ class FilterdTaskAdapter(
         holder.delete.setOnClickListener {
             showDeleteConfirmationDialog(holder.itemView.context, position)
         }
+
+        holder.delete.setOnClickListener {
+            showDeleteConfirmationDialog(holder.itemView.context, position)
+        }
+
+        holder.edit.setOnClickListener {
+            val intent = Intent(holder.itemView.context, edit_task::class.java)
+            intent.putExtra("TASK", currentItem.taskData)
+            intent.putExtra("DATE", currentItem.dateData)
+            intent.putExtra("TIME", currentItem.timeData)
+            intent.putExtra("POSITION", position) // Pass position instead of ID
+
+            (holder.itemView.context as Activity).startActivityForResult(intent, REQUEST_CODE_EDIT)
+        }
+
     }
 
     override fun getItemCount() = itemList.size

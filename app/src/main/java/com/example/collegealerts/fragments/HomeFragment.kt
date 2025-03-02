@@ -1,25 +1,31 @@
 package com.example.collegealerts.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.collegealerts.R
 import com.example.collegealerts.adapter.ItemAdapter
+import com.example.collegealerts.addTask
 import com.example.collegealerts.data.DatabaseHelper
 import com.example.collegealerts.data.Datas
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var gridRecyclerView: RecyclerView
     private lateinit var itemAdapter: ItemAdapter
     private val sampleData = mutableListOf<Datas>()
     private lateinit var databaseHelper: DatabaseHelper
+    private lateinit var addTaskBtn: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +37,13 @@ class HomeFragment : Fragment() {
         // Initialize DatabaseHelper
         databaseHelper = DatabaseHelper(requireContext())
 
-        // Setup RecyclerView
+        addTaskBtn = view.findViewById<Button>(R.id.btnAddTask)
+        addTaskBtn.setOnClickListener {
+            val intent = Intent(requireContext(), addTask::class.java)
+            startActivity(intent)
+        }
+
+        // Setup Task RecyclerView
         recyclerView = view.findViewById(R.id.rvTasks)
         recyclerView.layoutManager = LinearLayoutManager(
             requireContext(),
@@ -85,11 +97,10 @@ class HomeFragment : Fragment() {
     }
 
 
+
     // Function to handle setting an alert for a task
     private fun setAlertForTask(task: Datas) {
 
     }
-
-
 
 }

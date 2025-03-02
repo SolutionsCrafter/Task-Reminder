@@ -4,6 +4,7 @@
     package="com.example.collegealerts">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,32 +15,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
-
+        <activity
+            android:name=".edit_task"
+            android:exported="false" />
         <!-- Activity for adding a task -->
         <activity
             android:name=".addTask"
-            android:exported="false" />
-
-        <!-- Main Activity, entry point of the app -->
+            android:exported="false" /> <!-- Main Activity, entry point of the app -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- NotificationReceiver to show notifications -->
+        </activity> <!-- NotificationReceiver to show notifications -->
         <receiver
             android:name=".NotificationReceiver"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.POST_NOTIFICATIONS" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
     </application>
 
 </manifest>
