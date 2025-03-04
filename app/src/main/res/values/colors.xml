@@ -24,4 +24,28 @@
     <color name="icon_tint_3">#3949AB</color>
     <color name="icon_tint_4">#FB8C00</color>
 
+    <!-- Primary Color Palette -->
+    <color name="addprimary_color">#3A6EA5</color>
+    <color name="addprimary_dark">#2C5386</color>
+    <color name="addprimary_light">#6291C7</color>
+
+    <!-- Accent Colors -->
+    <color name="addaccent_color">#FF6B6B</color>
+    <color name="addaccent_light">#FFD93D</color>
+
+    <!-- Background and Text Colors -->
+    <color name="addbackground_color">#F4F6F9</color>
+    <color name="addtext_primary">#2C3E50</color>
+    <color name="addtext_secondary">#34495E</color>
+
+    <!-- Neutral Colors -->
+    <color name="addwhite">#FFFFFF</color>
+    <color name="addblack">#000000</color>
+    <color name="addgray_light">#ECF0F1</color>
+    <color name="addgray_medium">#BDC3C7</color>
+
+    <!-- Gradient Colors -->
+    <color name="addgradient_start">#4E73DF</color>
+    <color name="addgradient_end">#224ABE</color>
+
 </resources>

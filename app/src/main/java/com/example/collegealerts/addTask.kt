@@ -43,9 +43,9 @@ class addTask : AppCompatActivity() {
         // Initialize the database
         databaseHelper = DatabaseHelper(this)
 
-        btnCalendar = findViewById(R.id.imgBtnCalendar)
+        //btnCalendar = findViewById(R.id.imgBtnCalendar)
         tvDate = findViewById(R.id.tvDate)
-        btnTime = findViewById(R.id.imgBtnTime)
+        //btnTime = findViewById(R.id.imgBtnTime)
         tvTime = findViewById(R.id.tvTime)
         val etTask = findViewById<EditText>(R.id.edTask)
 
@@ -77,7 +77,7 @@ class addTask : AppCompatActivity() {
     }
 
     private fun pickDate() {
-        btnCalendar.setOnClickListener {
+        tvDate.setOnClickListener {
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
@@ -100,7 +100,7 @@ class addTask : AppCompatActivity() {
 
 
     private fun pickTime() {
-        btnTime.setOnClickListener {
+        tvTime.setOnClickListener {
             val c = Calendar.getInstance()
             val hour = c.get(Calendar.HOUR_OF_DAY)
             val minute = c.get(Calendar.MINUTE)

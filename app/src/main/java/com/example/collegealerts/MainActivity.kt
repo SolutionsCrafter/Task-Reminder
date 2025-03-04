@@ -21,6 +21,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class MainActivity : AppCompatActivity() {
 
     private lateinit var fab:FloatingActionButton
+    private lateinit var appBar:Toolbar
+    private lateinit var calendarTollBar:Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         fragmentAndNavBarInit()
+        appBar = findViewById(R.id.appBar)
+        calendarTollBar = findViewById(R.id.calendarToolbar)
+        calendarTollBar.visibility = View.INVISIBLE
+        appBar.visibility = View.VISIBLE
 
 //        fab = findViewById<FloatingActionButton>(R.id.fbtn)
 //        fab.setOnClickListener {
@@ -81,24 +87,33 @@ class MainActivity : AppCompatActivity() {
         navBar.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.menu_home->{
+                    calendarTollBar.visibility = View.INVISIBLE
+                    appBar.visibility = View.VISIBLE
                     setCurrentFragment(homeFragment)
                     //title.text = "Home"
                     //fab.visibility = View.GONE
                     //pageBackBtn.visibility = View.GONE
                 }
                 R.id.menu_calendar->{
+                    appBar.visibility = View.INVISIBLE
+                    calendarTollBar.visibility = View.VISIBLE
                     setCurrentFragment(calendarFragment)
                     //title.text = "Calendar"
                     //fab.visibility = View.GONE
                     //pageBackBtn.visibility = View.VISIBLE
+
                 }
                 R.id.menu_alerts->{
+                    calendarTollBar.visibility = View.GONE
+                    appBar.visibility = View.GONE
                     setCurrentFragment(alertFragment)
                     //title.text = "Alerts"
                     //fab.visibility = View.GONE
                     //pageBackBtn.visibility = View.VISIBLE
                 }
                 R.id.menu_settings->{
+                    calendarTollBar.visibility = View.GONE
+                    appBar.visibility = View.GONE
                     setCurrentFragment(settingsFragment)
                     //title.text = "Settings"
                     //fab.visibility = View.GONE

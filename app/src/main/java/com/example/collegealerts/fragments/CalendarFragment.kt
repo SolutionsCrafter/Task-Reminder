@@ -51,7 +51,7 @@ class CalendarFragment : Fragment() {
         selectedDate = sdf.format(Date(selectedDateMillis))
         Log.d("CalendarFragment", "Selected initial date: $selectedDate")
 
-        view.findViewById<TextView>(R.id.tvTask).text = "List for ${selectedDate}"
+        view.findViewById<TextView>(R.id.tvTask).text = "${selectedDate}"
 
         // Setup RecyclerView
         recyclerView = view.findViewById(R.id.rvfilterd)
@@ -81,7 +81,7 @@ class CalendarFragment : Fragment() {
             cal.set(year, month, dayOfMonth) // Set selected date
             this.selectedDate = sdf.format(cal.time) // Format properly
             Log.d("CalendarFragment", "Date changed: $selectedDate")
-            view.findViewById<TextView>(R.id.tvTask).text = "List for ${selectedDate}"
+            view.findViewById<TextView>(R.id.tvTask).text = "${selectedDate}"
             // Load data from the database
             loadTasksForDate(selectedDate)
         }

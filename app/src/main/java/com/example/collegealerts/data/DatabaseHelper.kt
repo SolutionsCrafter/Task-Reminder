@@ -126,9 +126,13 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         val selection = "$COLUMN_TASK = ?"
         val selectionArgs = arrayOf(task.taskData)  // Using the task's data for deletion
         val rowsDeleted = db.delete(TABLE_NAME, selection, selectionArgs)
+
+        Log.d("DatabaseHelper", "Rows deleted: $rowsDeleted") // Log the number of deleted rows
+
         db.close()
         return rowsDeleted
     }
+
 
     /**
      * Retrieves tasks from the database that match a specific date.

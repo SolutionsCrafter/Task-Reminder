@@ -6,125 +6,185 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F7FA"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <!-- Top App Bar with Improved Design -->
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/appBar"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="?attr/colorPrimary"
-        android:padding="10dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:elevation="0dp"
+        android:padding="16dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Greeting and Slogan Container (Left Side) -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <!-- Greeting Text -->
-            <TextView
-                android:id="@+id/greetingText"
+            <!-- User Greeting Section -->
+            <LinearLayout
+                android:id="@+id/greetingSection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hello, User 👋"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <!-- Slogan Text -->
-            <TextView
-                android:id="@+id/sloganText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:alpha="0.8"
-                android:text="Stay Organized, Stay Productive"
-                android:textColor="@android:color/white"
-                android:textSize="14sp" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/greetingText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hello, User 👋"
+                    android:textColor="#333333"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-        <!-- Push Profile Section to Right -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+                <TextView
+                    android:id="@+id/sloganText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Stay Organized, Stay Productive"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
-        <!-- Profile Section (Right Side) -->
+            <!-- Profile Section -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/profileCard"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="4dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/profile_icon"
+                    tools:ignore="ContentDescription" />
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/calendarToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/calendar_toolbar_background"
+        android:elevation="4dp"
+        android:layout_marginHorizontal="12dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/appBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/appBar"
+        app:layout_constraintTop_toTopOf="@+id/appBar">
+
+        <!-- Navigation Icon Container -->
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="10dp"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <!-- Profile Image -->
-            <ImageView
-                android:id="@+id/profileImage"
+            <!-- Back Navigation Button -->
+            <ImageButton
+                android:id="@+id/btnBack"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/circle_btn_bg"
-                android:padding="2dp"
-                android:scaleType="centerCrop"
-                android:src="@android:drawable/sym_def_app_icon" />
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Go Back"
+                android:padding="8dp"
+                android:src="@drawable/back_arrow"
+                app:tint="#333333" />
 
-            <!-- Profile Label -->
+            <!-- Calendar Title -->
             <TextView
-                android:id="@+id/profileLabel"
+                android:id="@+id/calendarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="Profile"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
+                android:layout_marginStart="16dp"
+                android:text="Calendar"
+                android:textColor="#333333"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <!-- Additional Action Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:gravity="center_vertical">
+
+            <!-- Today Button -->
+            <TextView
+                android:id="@+id/btnToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                android:text="Today"
+                android:textColor="#346BEF"
+                android:textStyle="bold" />
+
+            <!-- Options/More Button -->
+            <ImageButton
+                android:id="@+id/btnMoreOptions"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="More Options"
+                android:padding="8dp"
+                android:src="@drawable/ic_more_vert"
+                app:tint="#333333" />
+        </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
-
+    <!-- Main Content Frame -->
     <FrameLayout
         android:id="@+id/frag_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/white"
+        android:background="@drawable/rounded_white_background"
+        android:layout_marginHorizontal="12dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBar" />
 
+    <!-- Floating Action Button (Uncommented) -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="#346BEF"
+        android:contentDescription="Add New Item"
+        android:visibility="gone"
+        android:src="@drawable/add"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@android:color/white" />
 
+    <!-- Enhanced Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="8dp"
+        app:itemIconSize="24dp"
         app:itemIconTint="@color/nav_item_color_selector"
         app:itemTextColor="@color/primary_color"
-        android:background="@color/white"
-        app:itemIconSize="27dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
-
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/fbtn"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:contentDescription="@string/app_name"-->
-<!--        android:src="@drawable/add"-->
-<!--        android:layout_marginBottom="20dp"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:backgroundTint="#346bef"-->
-<!--        app:tint="@color/white"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/frag_view"-->
-<!--        app:layout_constraintEnd_toEndOf="parent" />-->
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

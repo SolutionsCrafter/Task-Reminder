@@ -7,11 +7,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.collegealerts.R
+import com.example.collegealerts.data.DatabaseHelper
 import com.example.collegealerts.data.Datas
 import com.example.collegealerts.edit_task
 
@@ -28,6 +31,7 @@ class FilterdTaskAdapter(
         val alert: ImageButton = itemView.findViewById(R.id.btnAlert)
         val delete: ImageButton = itemView.findViewById(R.id.btnDelete)
         val edit: ImageButton = itemView.findViewById(R.id.btnEdit)
+        val done: CheckBox = itemView.findViewById(R.id.checkboxComplete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -65,6 +69,35 @@ class FilterdTaskAdapter(
             (holder.itemView.context as Activity).startActivityForResult(intent, REQUEST_CODE_EDIT)
         }
 
+        holder.done.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                showDeleteConfirmationDialog(holder.itemView.context, position) {
+                    holder.done.setButtonDrawable(R.drawable.check_box_on) // Checked drawable
+
+                    // Get the correct task data
+                    val task = itemList[position]
+
+                    // Initialize database helper
+                    val dbHelper = DatabaseHelper(holder.itemView.context)
+
+                    // Add the task to completed_tasks table
+                    val success = dbHelper.addToCompletedTasks(task)
+
+                    if (success) {
+                        Toast.makeText(holder.itemView.context, "Task moved to completed!", Toast.LENGTH_SHORT).show()
+                        // Remove the task from the current list and update RecyclerView
+                        (itemList as MutableList).removeAt(position)
+                        notifyItemRemoved(position)
+                    } else {
+                        Toast.makeText(holder.itemView.context, "Error moving task!", Toast.LENGTH_SHORT).show()
+                        holder.done.isChecked = false  // Reset checkbox if operation fails
+                    }
+                }
+            } else {
+                holder.done.setButtonDrawable(R.drawable.check_box_off) // Unchecked drawable
+            }
+        }
+
     }
 
     override fun getItemCount() = itemList.size
@@ -87,4 +120,18 @@ class FilterdTaskAdapter(
 
         builder.show()
     }
+
+    private fun showDeleteConfirmationDialog(context: Context, position: Int, onConfirm: () -> Unit) {
+        AlertDialog.Builder(context)
+            .setTitle("Confirm Delete")
+            .setMessage("Are you sure?")
+            .setPositiveButton("Yes") { _, _ ->
+                onConfirm() // Execute the callback if user confirms
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
 }
