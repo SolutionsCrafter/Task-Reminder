@@ -48,4 +48,21 @@
     <color name="addgradient_start">#4E73DF</color>
     <color name="addgradient_end">#224ABE</color>
 
+    <color name="calendar_header_bg">#3F51B5</color>
+    <color name="calendar_header_text">#FFFFFF</color>
+    <color name="selected_week_bg">#E8EAF6</color>
+    <color name="unfocused_date">#BDBDBD</color>
+    <color name="week_number">#3F51B5</color>
+    <color name="week_separator">#E0E0E0</color>
+    <color name="task_header_text">#3F51B5</color>
+    <color name="fab_background">#FF4081</color>
+
+        <color name="popup_background">#FFFFFF</color> <!-- Background color -->
+        <color name="popup_text">#333333</color> <!-- Text color -->
+        <color name="popup_icon">#D32F2F</color> <!-- Icon color (Red) -->
+        <color name="popup_button_positive">#4CAF50</color> <!-- Positive button (Green) -->
+        <color name="popup_button_negative">#757575</color> <!-- Negative button (Gray) -->
+        <color name="popup_button_text">#FFFFFF</color> <!-- Button text color -->
+
+
 </resources>

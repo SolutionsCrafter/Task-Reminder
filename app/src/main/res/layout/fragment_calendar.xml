@@ -3,69 +3,125 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:layout_marginTop="12dp"
+    android:background="@drawable/calendar_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Calendar Header -->
+
+
+        <!-- Beautified Calendar View -->
         <CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
+            android:background="@drawable/calendar_card_background"
             android:dateTextAppearance="@style/CalendarDateTextAppearance"
-            android:selectedWeekBackgroundColor="#E8EAF6"
+
+            android:elevation="4dp"
+            android:firstDayOfWeek="2"
+            android:selectedWeekBackgroundColor="@color/selected_week_bg"
             android:theme="@style/CalendarTheme"
-            android:weekNumberColor="#3F51B5"
-            android:weekSeparatorLineColor="#E0E0E0"
+            android:unfocusedMonthDateColor="@color/unfocused_date"
+            android:weekNumberColor="@color/week_number"
+            android:weekSeparatorLineColor="@color/week_separator"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvTask"
+        <!-- Task Section Header with Icon -->
+        <LinearLayout
+            android:id="@+id/taskHeaderLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="24dp"
-            android:gravity="start"
-            android:text="Tasks"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/task_header_background"
+            android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calendarView" />
+            app:layout_constraintTop_toBottomOf="@+id/calendarView">
 
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/check_box_on"
+                android:contentDescription="Task icon"
+                app:tint="@color/task_header_text" />
+
+
+            <TextView
+                android:id="@+id/tvTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Tasks"
+                android:textColor="@color/task_header_text"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Tasks RecyclerView with Card Style -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvfilterd"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="7dp"
-            android:padding="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/tasks_list_background"
+            android:clipToPadding="false"
+            android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTask" />
+            app:layout_constraintTop_toBottomOf="@+id/taskHeaderLayout" />
 
-        <TextView
-            android:id="@+id/tvNoTasks"
+        <!-- Empty State with Icon -->
+        <LinearLayout
+            android:id="@+id/emptyStateLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No tasks are assigned"
-            android:textColor="#80000000"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:orientation="vertical"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/rvfilterd"
-            app:layout_constraintVertical_bias="0.291" />
+            app:layout_constraintTop_toBottomOf="@+id/taskHeaderLayout">
+
+            <ImageView
+                android:id="@+id/imgNoTasks"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/empty_task"
+                android:alpha="0.5"
+                android:contentDescription="No tasks" />
+
+            <TextView
+                android:id="@+id/tvNoTasks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="No tasks for this day"
+                android:textColor="#80000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- FAB for adding new tasks -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabAddTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="Add task"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </FrameLayout>

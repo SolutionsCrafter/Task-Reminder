@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CalendarView
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -28,6 +29,7 @@ class CalendarFragment : Fragment() {
     private var filterdData = mutableListOf<Datas>()
     private lateinit var databaseHelper: DatabaseHelper
     private lateinit var tvNoTasks: TextView
+    private lateinit var imgNoTasks: ImageView
     private lateinit var btnEdit: ImageButton
 
     override fun onCreateView(
@@ -44,6 +46,7 @@ class CalendarFragment : Fragment() {
         Log.d("CalendarFragment", "DatabaseHelper initialized")
 
         tvNoTasks = view.findViewById(R.id.tvNoTasks)
+        imgNoTasks = view.findViewById(R.id.imgNoTasks)
         calendar = view.findViewById(R.id.calendarView)
 
         val selectedDateMillis = calendar.date
@@ -110,8 +113,10 @@ class CalendarFragment : Fragment() {
         if (filterdData.isEmpty()) {
             recyclerView.visibility = View.GONE
             tvNoTasks.visibility = View.VISIBLE
+            imgNoTasks.visibility = View.VISIBLE
         }else{
             tvNoTasks.visibility = View.GONE
+            imgNoTasks.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
             // Notify the adapter that the data has changed
             filterdItemAdapter.notifyDataSetChanged()

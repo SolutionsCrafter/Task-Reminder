@@ -17,6 +17,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        dataBinding = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -65,5 +69,6 @@ dependencies {
 
     implementation ("com.google.code.gson:gson:2.11.0")
 
+    implementation ("com.saadahmedev.popup-dialog:popup-dialog:2.0.0")
 
 }

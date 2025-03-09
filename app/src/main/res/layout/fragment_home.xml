@@ -260,7 +260,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
+                    android:layout_marginBottom="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -268,8 +268,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Today's Tasks"
-                        android:textColor="@color/text_primary"
+                        android:text="All Tasks"
+                        android:textColor="@color/calendar_header_bg"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -283,7 +283,7 @@
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="8dp"
                         app:cornerRadius="20dp"
-                        app:backgroundTint="#5C6BC0"
+                        app:backgroundTint="@color/calendar_header_bg"
                         app:elevation="2dp" />
                 </LinearLayout>
                 <androidx.recyclerview.widget.RecyclerView

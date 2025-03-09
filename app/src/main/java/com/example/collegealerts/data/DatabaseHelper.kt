@@ -77,7 +77,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     fun getAllTasks(): List<Datas> {
         val taskList = mutableListOf<Datas>()
         val db = readableDatabase
-        val query = "SELECT $COLUMN_TASK, $COLUMN_DATE, $COLUMN_TIME FROM $TABLE_NAME"
+        val query = "SELECT $COLUMN_TASK, $COLUMN_DATE, $COLUMN_TIME FROM $TABLE_NAME ORDER BY $COLUMN_DATE ASC, $COLUMN_TIME ASC"
         val cursor = db.rawQuery(query, null)
 
         if (cursor.moveToFirst()) {
@@ -93,6 +93,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db.close()
         return taskList
     }
+
 
     /**
      * Inserts a new task into the database.
@@ -143,7 +144,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     fun getTasksByDate(date: String): List<Datas> {
         val taskList = mutableListOf<Datas>()
         val db = readableDatabase
-        val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_DATE = ?"
+        val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_DATE = ? ORDER BY $COLUMN_DATE ASC, $COLUMN_TIME ASC"
         val cursor = db.rawQuery(query, arrayOf(date))
 
         if (cursor.moveToFirst()) {
@@ -159,6 +160,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db.close()
         return taskList
     }
+
 
     /**
      * Updates an existing task in the database.

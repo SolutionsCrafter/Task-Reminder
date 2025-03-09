@@ -14,9 +14,12 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:elevation="0dp"
-        android:padding="16dp"
+        android:background="@color/calendar_header_bg"
+        android:elevation="4dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/calendarToolbar"
+        app:layout_constraintStart_toStartOf="@+id/calendarToolbar"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +31,7 @@
                 android:id="@+id/greetingSection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -37,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hello, User 👋"
-                    android:textColor="#333333"
+                    android:textColor="@color/white"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
@@ -47,18 +51,19 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Stay Organized, Stay Productive"
-                    android:textColor="#666666"
+                    android:textColor="#E0E0E0"
                     android:textSize="14sp" />
             </LinearLayout>
 
             <!-- Profile Section -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/profileCard"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                app:cardCornerRadius="15dp"
-                app:cardElevation="4dp"
-                android:layout_marginEnd="12dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -76,15 +81,12 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/calendarToolbar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="@drawable/calendar_toolbar_background"
+        android:layout_height="86dp"
+        android:background="@color/calendar_header_bg"
         android:elevation="4dp"
-        android:layout_marginHorizontal="12dp"
         android:paddingHorizontal="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/appBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/appBar"
-        app:layout_constraintTop_toTopOf="@+id/appBar">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <!-- Navigation Icon Container -->
         <LinearLayout
@@ -111,8 +113,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="Calendar"
-                android:textColor="#333333"
-                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textSize="22sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -122,18 +124,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:gravity="center_vertical">
-
-            <!-- Today Button -->
-            <TextView
-                android:id="@+id/btnToday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="8dp"
-                android:text="Today"
-                android:textColor="#346BEF"
-                android:textStyle="bold" />
 
             <!-- Options/More Button -->
             <ImageButton
@@ -153,9 +143,11 @@
         android:id="@+id/frag_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/rounded_white_background"
         android:layout_marginHorizontal="12dp"
+        android:background="@drawable/rounded_white_background"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBar" />
 
     <!-- Floating Action Button (Uncommented) -->
