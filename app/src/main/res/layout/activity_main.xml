@@ -14,7 +14,8 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/calendar_header_bg"
+        android:background="@drawable/bottom_nav_bg"
+        android:layout_marginHorizontal="10dp"
         android:elevation="4dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
@@ -81,10 +82,11 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/calendarToolbar"
         android:layout_width="match_parent"
-        android:layout_height="86dp"
-        android:background="@color/calendar_header_bg"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_nav_bg"
+        android:layout_marginHorizontal="10dp"
         android:elevation="4dp"
-        android:paddingHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -98,13 +100,14 @@
             <!-- Back Navigation Button -->
             <ImageButton
                 android:id="@+id/btnBack"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Go Back"
                 android:padding="8dp"
+                android:backgroundTint="#BDBDBD"
                 android:src="@drawable/back_arrow"
-                app:tint="#333333" />
+                app:tint="#BDBDBD" />
 
             <!-- Calendar Title -->
             <TextView
@@ -114,7 +117,7 @@
                 android:layout_marginStart="16dp"
                 android:text="Calendar"
                 android:textColor="@color/white"
-                android:textSize="22sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -123,6 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
             android:gravity="center_vertical">
 
             <!-- Options/More Button -->
@@ -134,7 +138,7 @@
                 android:contentDescription="More Options"
                 android:padding="8dp"
                 android:src="@drawable/ic_more_vert"
-                app:tint="#333333" />
+                app:tint="#BDBDBD" />
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 
@@ -143,7 +147,7 @@
         android:id="@+id/frag_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="12dp"
+        android:layout_marginHorizontal="10dp"
         android:background="@drawable/rounded_white_background"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -170,13 +174,22 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="8dp"
-        app:itemIconSize="24dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginBottom="7dp"
+        android:background="@drawable/bottom_nav_bg"
+        android:elevation="12dp"
+        app:itemIconSize="22dp"
         app:itemIconTint="@color/nav_item_color_selector"
-        app:itemTextColor="@color/primary_color"
+        app:itemRippleColor="#33FFFFFF"
+        app:itemTextColor="@color/nav_text_color"
+        app:itemPaddingBottom="0dp"
+        app:labelVisibilityMode="selected"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.375"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

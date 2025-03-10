@@ -1,20 +1,14 @@
 package com.example.collegealerts.adapter
 import android.app.Activity
-import android.app.AlertDialog
 import android.app.Dialog
-import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.collegealerts.R
 import com.example.collegealerts.data.DatabaseHelper
@@ -100,6 +94,7 @@ class ItemAdapter(
 
     override fun getItemCount() = itemList.size
 
+    //Delete task confirmation
     private fun showDeleteConfirmationDialog(context: Context, position: Int) {
         val currentItem = itemList[position] // Get the item to delete
 
@@ -112,10 +107,10 @@ class ItemAdapter(
             .setIconColor(R.color.popup_icon) // Warning color for delete action
             .setPositiveButtonText("Yes")
             .setNegativeButtonText("Cancel")
-//            .setPositiveButtonTextColor(context.getColor(R.color.white))
-//            .setNegativeButtonTextColor(context.getColor(R.color.popup_button_text))
-//            .setPositiveButtonBackground(context.getColor(R.color.popup_button_positive)) // Red delete button
-//            .setNegativeButtonBackground(context.getColor(R.color.popup_button_negative)) // Gray cancel button
+            .setPositiveButtonTextColor(R.color.white)
+            .setNegativeButtonTextColor(R.color.popup_button_text)
+            .setPositiveButtonBackgroundColor(R.color.primary_color) // Red delete button
+            .setNegativeButtonBackgroundColor(R.color.popup_button_negative) // Gray cancel button
             .build(object : StandardDialogActionListener {
                 override fun onPositiveButtonClicked(dialog: Dialog) {
                     onDeleteClick(currentItem) // Execute delete action
@@ -129,21 +124,21 @@ class ItemAdapter(
             .show()
     }
 
-
+    //Done task confirmation
     private fun showDeleteConfirmationDialog(context: Context, position: Int, onConfirm: () -> Unit) {
         PopupDialog.getInstance(context)
             .standardDialogBuilder()
             .createStandardDialog()
             .setHeading("Confirm Task Completion")
             .setDescription("Are you sure you want to mark this task as completed? Once confirmed, it will be removed from the list.")
-            .setIcon(R.drawable.icon_delete) // Use an appropriate delete icon
+            .setIcon(R.drawable.icon_done) // Use an appropriate delete icon
             .setIconColor(R.color.popup_button_positive)
             .setPositiveButtonText("Yes")
             .setNegativeButtonText("No")
-//            .setPositiveButtonTextColor(ContextCompat.getColor(context, R.color.white))
-//            .setNegativeButtonTextColor(ContextCompat.getColor(context, R.color.popup_button_text))
-//            .setPositiveButtonBackground(ContextCompat.getColor(context, R.color.popup_button_positive)) // Red delete button
-//            .setNegativeButtonBackground(ContextCompat.getColor(context, R.color.popup_button_negative)) // Gray cancel button
+            .setPositiveButtonTextColor(R.color.white)
+            .setNegativeButtonTextColor(R.color.popup_button_text)
+            .setPositiveButtonBackgroundColor(R.color.popup_button_positive) // Red delete button
+            .setNegativeButtonBackgroundColor(R.color.popup_button_negative) // Gray cancel button
             .build(object : StandardDialogActionListener {
                 override fun onPositiveButtonClicked(dialog: Dialog) {
                     onConfirm() // Execute delete action

@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/calendar_card_background"
             android:dateTextAppearance="@style/CalendarDateTextAppearance"
-
             android:elevation="4dp"
             android:firstDayOfWeek="2"
             android:selectedWeekBackgroundColor="@color/selected_week_bg"

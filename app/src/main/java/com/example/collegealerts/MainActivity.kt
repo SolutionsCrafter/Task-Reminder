@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     private  fun fragmentAndNavBarInit(){
         val navBar = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+//        navBar.itemRippleColor = null
         val homeFragment=HomeFragment()
         val calendarFragment=CalendarFragment()
         val alertFragment=AlertFragment()
