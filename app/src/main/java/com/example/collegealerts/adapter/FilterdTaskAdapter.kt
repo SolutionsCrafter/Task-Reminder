@@ -80,18 +80,6 @@ class FilterdTaskAdapter(
                     // Initialize database helper
                     val dbHelper = DatabaseHelper(holder.itemView.context)
 
-                    // Add the task to completed_tasks table
-                    val success = dbHelper.addToCompletedTasks(task)
-
-                    if (success) {
-                        Toast.makeText(holder.itemView.context, "Task moved to completed!", Toast.LENGTH_SHORT).show()
-                        // Remove the task from the current list and update RecyclerView
-                        (itemList as MutableList).removeAt(position)
-                        notifyItemRemoved(position)
-                    } else {
-                        Toast.makeText(holder.itemView.context, "Error moving task!", Toast.LENGTH_SHORT).show()
-                        holder.done.isChecked = false  // Reset checkbox if operation fails
-                    }
                 }
             } else {
                 holder.done.setButtonDrawable(R.drawable.check_box_off) // Unchecked drawable

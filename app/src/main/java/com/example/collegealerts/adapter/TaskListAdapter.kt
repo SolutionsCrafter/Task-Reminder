@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.example.collegealerts.R
 import com.example.collegealerts.data.DatabaseHelper
@@ -23,7 +25,8 @@ const val REQUEST_CODE_EDIT = 100
 class ItemAdapter(
     private val itemList: List<Datas>,
     private val onDeleteClick: (Datas) -> Unit, // Lambda for delete functionality
-    private val onAlertClick: (Datas) -> Unit  // Lambda for alert functionality (optional)
+    private val onAlertClick: (Datas) -> Unit, // Lambda for alert functionality (optional)
+    private val onDoneClick: (Datas) -> Unit  // Lambda for done functionality (optional)
 ) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -70,24 +73,12 @@ class ItemAdapter(
 
         holder.done.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                showDeleteConfirmationDialog(holder.itemView.context, position) {
-                    //holder.done.setButtonDrawable(R.drawable.check_box_on) // Checked drawable
-
-                    // Get the correct task data
-                    val task = itemList[position]
-
-                    // Initialize database helper
-                    val dbHelper = DatabaseHelper(holder.itemView.context)
-
-                    // Add the task to completed_tasks table
-                    onDeleteClick(currentItem)
+                showDoneConfirmationDialog(holder.itemView.context, position) {
                 }
             } else {
                 holder.done.setButtonDrawable(R.drawable.check_box_off) // Unchecked drawable
             }
         }
-
-
 
 
     }
@@ -125,7 +116,8 @@ class ItemAdapter(
     }
 
     //Done task confirmation
-    private fun showDeleteConfirmationDialog(context: Context, position: Int, onConfirm: () -> Unit) {
+    private fun showDoneConfirmationDialog(context: Context, position: Int, onConfirm: () -> Unit) {
+        val currentItem = itemList[position] // Get the item to delete
         PopupDialog.getInstance(context)
             .standardDialogBuilder()
             .createStandardDialog()
@@ -142,6 +134,7 @@ class ItemAdapter(
             .build(object : StandardDialogActionListener {
                 override fun onPositiveButtonClicked(dialog: Dialog) {
                     onConfirm() // Execute delete action
+                    onDoneClick(currentItem)
                     dialog.dismiss()
                 }
 

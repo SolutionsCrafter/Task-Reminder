@@ -6,6 +6,9 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * DatabaseHelper class for managing SQLite database operations.
@@ -24,7 +27,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         private const val COLUMN_TASK = "taskData"
         private const val COLUMN_DATE = "dateData"
         private const val COLUMN_TIME = "timeData"
-        private const val TABLE_COMPLETED = "completed_tasks"
+        private const val TASK_SUMMARY_TABLE = "summary"
     }
 
     /**
@@ -36,25 +39,29 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     override fun onCreate(db: SQLiteDatabase) {
         val createTable = """
             CREATE TABLE $TABLE_NAME (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                 $COLUMN_TASK TEXT,
                 $COLUMN_DATE TEXT,
                 $COLUMN_TIME TEXT
-            )
-        """
-        val createCompletedTasksTable = """
-        CREATE TABLE completed_tasks (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            taskData TEXT,
-            dateData TEXT,
-            timeData TEXT
-        );
-    """.trimIndent()
+            );
+        """.trimIndent()
+
+        val createSummaryTable = """
+            CREATE TABLE $TASK_SUMMARY_TABLE (
+                $COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                upcoming_tasks INTEGER DEFAULT 0,
+                today_tasks INTEGER DEFAULT 0,
+                completed_tasks INTEGER DEFAULT 0,
+                missed_tasks INTEGER DEFAULT 0
+            );
+        """.trimIndent()
 
         db.execSQL(createTable)
-        db.execSQL(createCompletedTasksTable)
-    }
+        db.execSQL(createSummaryTable)
 
+        // Insert an initial row in task_summary with default values
+        db.execSQL("INSERT INTO $TASK_SUMMARY_TABLE (total_tasks, today_tasks, completed_tasks, missed_tasks) VALUES (0, 0, 0, 0)")
+    }
     /**
      * Called when the database needs to be upgraded.
      * This implementation drops the existing table and recreates it.
@@ -112,6 +119,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         }
 
         val result = db.insert(TABLE_NAME, null, values)
+
         db.close()
         return result
     }
@@ -124,15 +132,74 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
      */
     fun deleteTask(task: Datas): Int {
         val db = writableDatabase
+        val todayDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()) // Get today's date
+
+        // Find task category before deleting
+        val query = "SELECT $COLUMN_DATE FROM $TABLE_NAME WHERE $COLUMN_TASK = ?"
+        val cursor = db.rawQuery(query, arrayOf(task.taskData))
+
+        var taskDate: String? = null
+        if (cursor.moveToFirst()) {
+            taskDate = cursor.getString(0) // Get task date
+        }
+        cursor.close()
+
+        // Delete task
         val selection = "$COLUMN_TASK = ?"
-        val selectionArgs = arrayOf(task.taskData)  // Using the task's data for deletion
+        val selectionArgs = arrayOf(task.taskData)
         val rowsDeleted = db.delete(TABLE_NAME, selection, selectionArgs)
 
-        Log.d("DatabaseHelper", "Rows deleted: $rowsDeleted") // Log the number of deleted rows
+        if (rowsDeleted > 0 && taskDate != null) {
+            // Update the relevant task count
+            when {
+                taskDate == todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET today_tasks = today_tasks - 1 WHERE today_tasks > 0")
+                taskDate < todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET missed_tasks = missed_tasks - 1 WHERE missed_tasks > 0")
+                taskDate > todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET total_tasks = total_tasks - 1 WHERE total_tasks > 0")
+            }
+        }
 
+        Log.d("DatabaseHelper", "Rows deleted: $rowsDeleted")
         db.close()
         return rowsDeleted
     }
+
+
+    fun doneTask(task: Datas): Int {
+        val db = writableDatabase
+        val todayDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+
+        // Find task category before deleting
+        val query = "SELECT $COLUMN_DATE FROM $TABLE_NAME WHERE $COLUMN_TASK = ?"
+        val cursor = db.rawQuery(query, arrayOf(task.taskData))
+
+        var taskDate: String? = null
+        if (cursor.moveToFirst()) {
+            taskDate = cursor.getString(0) // Get task date
+        }
+        cursor.close()
+
+        // Delete task
+        val selection = "$COLUMN_TASK = ?"
+        val selectionArgs = arrayOf(task.taskData)
+        val rowsDeleted = db.delete(TABLE_NAME, selection, selectionArgs)
+
+        if (rowsDeleted > 0 && taskDate != null) {
+            // Increment completed_tasks
+            db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET completed_tasks = completed_tasks + 1")
+
+            // Update the relevant task count
+            when {
+                taskDate == todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET today_tasks = today_tasks - 1 WHERE today_tasks > 0")
+                taskDate < todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET missed_tasks = missed_tasks - 1 WHERE missed_tasks > 0")
+                taskDate > todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET total_tasks = total_tasks - 1 WHERE total_tasks > 0")
+            }
+        }
+
+        Log.d("DatabaseHelper", "Task marked as done: $rowsDeleted")
+        db.close()
+        return rowsDeleted
+    }
+
 
 
     /**
@@ -161,7 +228,6 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         return taskList
     }
 
-
     /**
      * Updates an existing task in the database.
      *
@@ -186,36 +252,73 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             arrayOf(newTask) // Use task name as the condition
         )
         db.close()
-        
+
         Log.d("DatabaseHelper", "Update result: $result") // Log the result to see if it is > 0
         return result > 0
     }
 
-    fun addToCompletedTasks(task: Datas): Boolean {
-        val db = writableDatabase
-        return try {
-            val values = ContentValues().apply {
-                put(COLUMN_TASK, task.taskData)
-                put(COLUMN_DATE, task.dateData)
-                put(COLUMN_TIME, task.timeData)
-            }
-            val insertResult = db.insert(TABLE_COMPLETED, null, values)
+    fun getTodayTaskCount(): Int {
+        val db = readableDatabase
+        val todayDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()) // Get today's date
 
-            if (insertResult != -1L) {
-                Log.d("DatabaseSuccess", "Task added to completed_tasks")
-                true
-            } else {
-                Log.e("DatabaseError", "Failed to insert task into completed_tasks")
-                false
-            }
-        } catch (e: Exception) {
-            Log.e("DatabaseError", "Exception: ${e.message}")
-            false
-        } finally {
-            db.close()
+        val query = "SELECT COUNT(*) FROM $TABLE_NAME WHERE $COLUMN_DATE = ?"
+        val cursor = db.rawQuery(query, arrayOf(todayDate))
+
+        var count = 0
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0) // Get the count from the first column
         }
+
+        cursor.close()
+        db.close()
+        return count
+    }
+
+    fun getPastTaskCount(): Int {
+        val db = readableDatabase
+        val todayDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()) // Get today's date
+
+        val query = "SELECT COUNT(*) FROM $TABLE_NAME WHERE $COLUMN_DATE < ?"
+        val cursor = db.rawQuery(query, arrayOf(todayDate))
+
+        var count = 0
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0) // Get the count from the first column
+        }
+
+        cursor.close()
+        db.close()
+        return count
     }
 
 
+    fun getUpcomingTaskCount(): Int {
+        val db = readableDatabase
+        val todayDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()) // Get today's date
+
+        val query = "SELECT COUNT(*) FROM $TABLE_NAME WHERE $COLUMN_DATE > ?"
+        val cursor = db.rawQuery(query, arrayOf(todayDate))
+
+        var count = 0
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0)
+        }
+
+        cursor.close()
+        db.close()
+        return count
+    }
+
+    fun getCompletedTasks(): Int {
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT completed_tasks FROM $TASK_SUMMARY_TABLE", null)
+        var count = 0
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0)
+        }
+        cursor.close()
+        db.close()
+        return count
+    }
 
 }

@@ -58,7 +58,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/tvGrid1Count"
+                                android:id="@+id/tvGridUpcoming"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="12"
@@ -70,7 +70,7 @@
                                 android:id="@+id/tvGrid1Name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Total Tasks"
+                                android:text="Upcoming Tasks"
                                 android:textColor="@color/text_secondary"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -115,7 +115,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/tvGrid2Count"
+                                android:id="@+id/tvGridToday"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="5"
@@ -173,7 +173,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/tvGrid3Count"
+                                android:id="@+id/tvGridComplete"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="7"
@@ -230,7 +230,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/tvGrid4Count"
+                                android:id="@+id/tvGridMissed"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="2"
