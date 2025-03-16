@@ -2,6 +2,7 @@ package com.example.collegealerts.adapter
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -17,11 +18,15 @@ import com.example.collegealerts.R
 import com.example.collegealerts.data.DatabaseHelper
 import com.example.collegealerts.data.Datas
 import com.example.collegealerts.edit_task
+import com.saadahmedev.popupdialog.PopupDialog
+import com.saadahmedev.popupdialog.PopupDialog.getInstance
+import com.saadahmedev.popupdialog.listener.StandardDialogActionListener
 
 class FilterdTaskAdapter(
     private val itemList: MutableList<Datas>, // ✅ Changed to MutableList for item removal
     private val onDeleteClick: (Datas) -> Unit, // ✅ Lambda for delete functionality
-    private val onAlertClick: (Datas) -> Unit  // ✅ Lambda for alert functionality
+    private val onAlertClick: (Datas) -> Unit,  // ✅ Lambda for alert functionality
+    private val onDoneClick: (Datas) -> Unit   // ✅ Lambda for done functionality
 ) : RecyclerView.Adapter<FilterdTaskAdapter.ItemViewHolder>() { // ✅ Fixed ViewHolder reference
 
     class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -71,15 +76,8 @@ class FilterdTaskAdapter(
 
         holder.done.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                showDeleteConfirmationDialog(holder.itemView.context, position) {
+                showDoneConfirmationDialog(holder.itemView.context, position) {
                     holder.done.setButtonDrawable(R.drawable.check_box_on) // Checked drawable
-
-                    // Get the correct task data
-                    val task = itemList[position]
-
-                    // Initialize database helper
-                    val dbHelper = DatabaseHelper(holder.itemView.context)
-
                 }
             } else {
                 holder.done.setButtonDrawable(R.drawable.check_box_off) // Unchecked drawable
@@ -90,36 +88,65 @@ class FilterdTaskAdapter(
 
     override fun getItemCount() = itemList.size
 
+    //Delete task confirmation
     private fun showDeleteConfirmationDialog(context: Context, position: Int) {
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("Are you sure?")
-        val currentItem = itemList[position]
+        val currentItem = itemList[position] // Get the item to delete
 
-        builder.setPositiveButton("Yes") { dialog, _ ->
-            itemList.removeAt(position) // ✅ Remove from list
-            notifyItemRemoved(position) // ✅ Notify RecyclerView
-            onDeleteClick(currentItem)  // ✅ Notify parent activity
-            dialog.dismiss()
-        }
+        getInstance(context)
+            .standardDialogBuilder()
+            .createStandardDialog()
+            .setHeading("Are you sure?")
+            .setDescription("Do you really want to delete this item? This action cannot be undone.")
+            .setIcon(R.drawable.icon_delete) // Use a delete icon
+            .setIconColor(R.color.popup_icon) // Warning color for delete action
+            .setPositiveButtonText("Yes")
+            .setNegativeButtonText("Cancel")
+            .setPositiveButtonTextColor(R.color.white)
+            .setNegativeButtonTextColor(R.color.popup_button_text)
+            .setPositiveButtonBackgroundColor(R.color.primary_color) // Red delete button
+            .setNegativeButtonBackgroundColor(R.color.popup_button_negative) // Gray cancel button
+            .build(object : StandardDialogActionListener {
+                override fun onPositiveButtonClicked(dialog: Dialog) {
+                    onDeleteClick(currentItem) // Execute delete action
+                    dialog.dismiss()
+                }
 
-        builder.setNegativeButton("Cancel") { dialog, _ ->
-            dialog.dismiss()
-        }
-
-        builder.show()
-    }
-
-    private fun showDeleteConfirmationDialog(context: Context, position: Int, onConfirm: () -> Unit) {
-        AlertDialog.Builder(context)
-            .setTitle("Confirm Delete")
-            .setMessage("Are you sure?")
-            .setPositiveButton("Yes") { _, _ ->
-                onConfirm() // Execute the callback if user confirms
-            }
-            .setNegativeButton("No") { dialog, _ ->
-                dialog.dismiss()
-            }
+                override fun onNegativeButtonClicked(dialog: Dialog) {
+                    dialog.dismiss()
+                }
+            })
             .show()
     }
+
+    //Done task confirmation
+    private fun showDoneConfirmationDialog(context: Context, position: Int, onConfirm: () -> Unit) {
+        val currentItem = itemList[position] // Get the item to delete
+        PopupDialog.getInstance(context)
+            .standardDialogBuilder()
+            .createStandardDialog()
+            .setHeading("Confirm Task Completion")
+            .setDescription("Are you sure you want to mark this task as completed? Once confirmed, it will be removed from the list.")
+            .setIcon(R.drawable.icon_done) // Use an appropriate delete icon
+            .setIconColor(R.color.popup_button_positive)
+            .setPositiveButtonText("Yes")
+            .setNegativeButtonText("No")
+            .setPositiveButtonTextColor(R.color.white)
+            .setNegativeButtonTextColor(R.color.popup_button_text)
+            .setPositiveButtonBackgroundColor(R.color.popup_button_positive) // Red delete button
+            .setNegativeButtonBackgroundColor(R.color.popup_button_negative) // Gray cancel button
+            .build(object : StandardDialogActionListener {
+                override fun onPositiveButtonClicked(dialog: Dialog) {
+                    onConfirm() // Execute delete action
+                    onDoneClick(currentItem)
+                    dialog.dismiss()
+                }
+
+                override fun onNegativeButtonClicked(dialog: Dialog) {
+                    dialog.dismiss()
+                }
+            })
+            .show()
+    }
+
 
 }

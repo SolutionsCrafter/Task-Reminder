@@ -31,6 +31,7 @@ class CalendarFragment : Fragment() {
     private lateinit var tvNoTasks: TextView
     private lateinit var imgNoTasks: ImageView
     private lateinit var btnEdit: ImageButton
+    private val sampleData = mutableListOf<Datas>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,6 +72,10 @@ class CalendarFragment : Fragment() {
                 deleteTask(task)  // Handle delete functionality
             },
             onAlertClick = { task ->
+                setAlertForTask(task)  // Handle alert functionality
+            },
+            onDoneClick = { task ->
+                doneTask(task)  // Handle done functionality
                 //setAlertForTask(task)  // Handle alert functionality
             }
         )
@@ -125,20 +130,32 @@ class CalendarFragment : Fragment() {
 
     }
 
-    //TODO edit tasks
-
     // Handle delete functionality
     private fun deleteTask(task: Datas) {
-        Log.d("CalendarFragment", "Attempting to delete task: $task")
-        val deleted = databaseHelper.deleteTask(task) // Call the delete function from DatabaseHelper
+        val deleted = databaseHelper.deleteTask(task)
         if (deleted > 0) {
-            filterdData.remove(task) // Remove from the list
-            filterdItemAdapter.notifyDataSetChanged() // Notify the adapter
             Toast.makeText(requireContext(), "Task deleted!", Toast.LENGTH_SHORT).show()
-            Log.d("CalendarFragment", "Task deleted successfully")
+            loadTasksForDate(selectedDate) // Reload the tasks
         } else {
             Toast.makeText(requireContext(), "Failed to delete task", Toast.LENGTH_SHORT).show()
-            Log.d("CalendarFragment", "Failed to delete task")
         }
     }
+
+    // Handle done functionality
+    private fun doneTask(task: Datas) {
+        val updated = databaseHelper.doneTask(task)
+        if (updated > 0) {
+            Toast.makeText(requireContext(), "Task marked as done!", Toast.LENGTH_SHORT).show()
+            loadTasksForDate(selectedDate) // Reload the tasks
+        } else {
+            Toast.makeText(requireContext(), "Failed to update task", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    // Function to handle setting an alert for a task
+    private fun setAlertForTask(task: Datas) {
+
+    }
+
 }
