@@ -60,7 +60,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         db.execSQL(createSummaryTable)
 
         // Insert an initial row in task_summary with default values
-        db.execSQL("INSERT INTO $TASK_SUMMARY_TABLE (total_tasks, today_tasks, completed_tasks, missed_tasks) VALUES (0, 0, 0, 0)")
+        db.execSQL("INSERT INTO $TASK_SUMMARY_TABLE (upcoming_tasks, today_tasks, completed_tasks, missed_tasks) VALUES (0, 0, 0, 0)")
     }
     /**
      * Called when the database needs to be upgraded.
@@ -154,7 +154,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             when {
                 taskDate == todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET today_tasks = today_tasks - 1 WHERE today_tasks > 0")
                 taskDate < todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET missed_tasks = missed_tasks - 1 WHERE missed_tasks > 0")
-                taskDate > todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET total_tasks = total_tasks - 1 WHERE total_tasks > 0")
+                taskDate > todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET upcoming_tasks = upcoming_tasks - 1 WHERE upcoming_tasks > 0")
             }
         }
 
@@ -191,7 +191,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             when {
                 taskDate == todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET today_tasks = today_tasks - 1 WHERE today_tasks > 0")
                 taskDate < todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET missed_tasks = missed_tasks - 1 WHERE missed_tasks > 0")
-                taskDate > todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET total_tasks = total_tasks - 1 WHERE total_tasks > 0")
+                taskDate > todayDate -> db.execSQL("UPDATE $TASK_SUMMARY_TABLE SET upcoming_tasks = upcoming_tasks - 1 WHERE upcoming_tasks > 0")
             }
         }
 
