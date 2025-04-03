@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7FA"
+    android:background="@color/primary_background"
     tools:context=".MainActivity">
 
     <!-- Top App Bar with Improved Design -->
@@ -161,7 +161,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="#346BEF"
+        android:backgroundTint="@color/primary_accent"
         android:contentDescription="Add New Item"
         android:visibility="gone"
         android:src="@drawable/add"
@@ -178,18 +178,19 @@
         android:layout_marginVertical="10dp"
         android:layout_marginBottom="7dp"
         android:background="@drawable/bottom_nav_bg"
-        android:elevation="12dp"
-        app:itemIconSize="22dp"
-        app:itemIconTint="@color/nav_item_color_selector"
-        app:itemRippleColor="#33FFFFFF"
-        app:itemTextColor="@color/nav_text_color"
-        app:itemPaddingBottom="0dp"
-        app:labelVisibilityMode="selected"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.375"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+    android:elevation="12dp"
+    app:itemIconSize="22dp"
+    app:itemIconTint="@color/nav_item_color_selector"
+    app:itemRippleColor="#33FFFFFF"
+    app:itemTextColor="@color/secondary_text"
+    app:itemPaddingBottom="0dp"
+    app:labelVisibilityMode="labeled"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.375"
+    app:layout_constraintStart_toStartOf="parent"
+    app:menu="@menu/bottom_nav_menu" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -65,4 +65,25 @@
         <color name="popup_button_text">#FFFFFF</color> <!-- Button text color -->
 
 
+    <!-- Background Colors -->
+    <color name="primary_background">#1F2937</color>
+    <color name="secondary_background">#374151</color>
+
+    <!-- Accent Colors -->
+    <color name="primary_accent">#0D9488</color>
+
+    <!-- Text Colors -->
+    <color name="primary_text">#F3F4F6</color>
+    <color name="secondary_text">#D1D5DB</color>
+
+    <!-- Task Category Colors -->
+    <color name="upcoming_tasks">#F59E0B</color>
+    <color name="todays_tasks">#EC4899</color>
+    <color name="completed_tasks">#0EA5E9</color>
+    <color name="missed_tasks">#EF4444</color>
+
+    <!-- Text and Icon Colors -->
+    <color name="inactive_icons">#D1D5DB</color>  <!-- Light gray for inactive icons and text -->
+    <color name="active_icons">#0D9488</color>  <!-- Teal for active icons and text -->
+
 </resources>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color"
+    android:background="@color/primary_background"
     tools:context=".fragments.HomeFragment">
 
         <LinearLayout
@@ -26,7 +26,7 @@
                     android:layout_height="100dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
-                    app:cardBackgroundColor="@color/card_color_1"
+                    app:cardBackgroundColor="@color/secondary_background"
                     app:cardCornerRadius="16dp"
                     app:layout_constraintBottom_toTopOf="@+id/card3"
                     app:layout_constraintEnd_toStartOf="@+id/card2"
@@ -49,31 +49,34 @@
                             android:padding="8dp"
                             android:scaleType="centerInside"
                             android:src="@drawable/menu_alert"
-                            app:tint="@color/icon_tint_1" />
+                            app:tint="@color/upcoming_tasks" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
-                            android:orientation="vertical">
+                            android:orientation="vertical">  <!-- Aligns everything to the start (left) -->
 
                             <TextView
                                 android:id="@+id/tvGridUpcoming"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="12"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/primary_text"
                                 android:textSize="24sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:textAlignment="center"/>  <!-- Centers the number text horizontally -->
 
                             <TextView
                                 android:id="@+id/tvGrid1Name"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Upcoming Tasks"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="@color/secondary_text"
+                                android:textAlignment="center"
                                 android:textSize="14sp" />
                         </LinearLayout>
+
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -83,7 +86,7 @@
                     android:layout_height="100dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginBottom="8dp"
-                    app:cardBackgroundColor="@color/card_color_2"
+                    app:cardBackgroundColor="@color/secondary_background"
                     app:cardCornerRadius="16dp"
                     app:layout_constraintBottom_toTopOf="@+id/card4"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -106,29 +109,32 @@
                             android:padding="8dp"
                             android:scaleType="centerInside"
                             android:src="@drawable/menu_alert"
-                            app:tint="@color/icon_tint_2" />
+                            app:tint="@color/todays_tasks" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:gravity="center">
 
                             <TextView
                                 android:id="@+id/tvGridToday"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="5"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/primary_text"
                                 android:textSize="24sp"
+                                android:textAlignment="center"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/tvGrid2Name"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Today's Tasks"
-                                android:textColor="@color/text_secondary"
+                                android:textAlignment="center"
+                                android:textColor="@color/secondary_text"
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -141,7 +147,7 @@
                     android:layout_height="100dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    app:cardBackgroundColor="@color/card_color_3"
+                    app:cardBackgroundColor="@color/secondary_background"
                     app:cardCornerRadius="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/card4"
@@ -164,29 +170,32 @@
                             android:padding="8dp"
                             android:scaleType="centerInside"
                             android:src="@drawable/menu_alert"
-                            app:tint="@color/icon_tint_3" />
+                            app:tint="@color/completed_tasks" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:gravity="center">
 
                             <TextView
                                 android:id="@+id/tvGridComplete"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="7"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/primary_text"
+                                android:textAlignment="center"
                                 android:textSize="24sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/tvGrid3Name"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Completed"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="@color/secondary_text"
+                                android:textAlignment="center"
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -198,7 +207,7 @@
                     android:layout_height="100dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    app:cardBackgroundColor="@color/card_color_4"
+                    app:cardBackgroundColor="@color/secondary_background"
                     app:cardCornerRadius="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -221,29 +230,34 @@
                             android:padding="8dp"
                             android:scaleType="centerInside"
                             android:src="@drawable/menu_alert"
-                            app:tint="@color/icon_tint_4" />
+                            app:tint="@color/missed_tasks" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:gravity="center">
 
                             <TextView
                                 android:id="@+id/tvGridMissed"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="2"
-                                android:textColor="@color/text_primary"
+                                android:textColor="@color/primary_text"
+                                android:textAlignment="center"
                                 android:textSize="24sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:gravity="start"
+                                tools:ignore="RtlCompat" />
 
                             <TextView
                                 android:id="@+id/tvGrid4Name"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="Missed"
-                                android:textColor="@color/text_secondary"
+                                android:textColor="@color/secondary_text"
+                                android:textAlignment="center"
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -269,7 +283,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="All Tasks"
-                        android:textColor="@color/calendar_header_bg"
+                        android:textColor="@color/primary_text"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -277,13 +291,16 @@
                         android:id="@+id/btnAddTask"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingEnd="20dp"
+                        android:paddingStart="20dp"
                         android:text="+ Add Task"
+                        android:textColor="@color/primary_text"
                         android:textAllCaps="false"
                         android:textSize="14sp"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="8dp"
                         app:cornerRadius="20dp"
-                        app:backgroundTint="@color/calendar_header_bg"
+                        app:backgroundTint="@color/primary_accent"
                         app:elevation="2dp" />
                 </LinearLayout>
                 <androidx.recyclerview.widget.RecyclerView

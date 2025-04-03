@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="true" android:color="@color/primary_color"/>  <!-- for active items -->
-    <item android:state_pressed="true" android:color="@color/white"/>  <!-- for pressed state -->
-    <item android:color="#BDBDBD"/>  <!-- for inactive items -->
+    <!-- Selected state: Use a bright color for selected item -->
+    <item android:color="@color/primary_accent" android:state_checked="true"/>  <!-- Selected icon and text color -->
+
+    <!-- Default (unselected) state: Use a muted color for unselected item -->
+    <item android:color="@color/secondary_text"/>  <!-- Inactive icon and text color -->
 </selector>

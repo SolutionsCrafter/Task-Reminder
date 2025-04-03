@@ -27,7 +27,7 @@
                 android:id="@+id/viewPriorityIndicator"
                 android:layout_width="3dp"
                 android:layout_height="0dp"
-                android:background="#FF4081"
+                android:background="@color/upcoming_tasks"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +41,7 @@
                 android:layout_marginEnd="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="#1A237E"
+                android:textColor="@color/primary_text"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/taskCompletionLayout"
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/time_and_date_backgroung"
+                android:background="@drawable/time_and_date_background"
                 android:orientation="horizontal"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="4dp"
@@ -68,14 +68,14 @@
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:src="@drawable/calendar"
-                    app:tint="#5C6BC0" />
+                    app:tint="@color/active_icons" />
 
                 <TextView
                     android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:textColor="#5C6BC0"
+                    android:textColor="@color/active_icons"
                     android:textStyle="bold"
                     android:textSize="12sp"
                     tools:text="May 20, 2024" />
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:background="@drawable/time_and_date_backgroung"
+                android:background="@drawable/time_and_date_background"
                 android:orientation="horizontal"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="4dp"
@@ -102,14 +102,14 @@
                     android:layout_height="14dp"
                     android:layout_marginStart="0dp"
                     android:src="@drawable/time"
-                    app:tint="#5C6BC0" />
+                    app:tint="@color/active_icons" />
 
                 <TextView
                     android:id="@+id/tvTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:textColor="#5C6BC0"
+                    android:textColor="@color/active_icons"
                     android:textStyle="bold"
                     android:textSize="12sp"
                     tools:text="2:30 PM" />
