@@ -23,14 +23,17 @@
             android:dateTextAppearance="@style/CalendarDateTextAppearance"
             android:elevation="4dp"
             android:firstDayOfWeek="2"
-            android:selectedWeekBackgroundColor="@color/selected_week_bg"
+            android:selectedWeekBackgroundColor="@color/primary_accent"
             android:theme="@style/CalendarTheme"
-            android:unfocusedMonthDateColor="@color/unfocused_date"
-            android:weekNumberColor="@color/week_number"
-            android:weekSeparatorLineColor="@color/week_separator"
+            android:unfocusedMonthDateColor="@color/secondary_text"
+            android:weekNumberColor="@color/secondary_text"
+            android:weekSeparatorLineColor="@color/secondary_background"
+            android:focusedMonthDateColor="@color/primary_text"
+            android:selectedDateVerticalBar="@color/primary_accent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <!-- Task Section Header with Icon -->
         <LinearLayout
@@ -51,7 +54,7 @@
                 android:layout_height="24dp"
                 android:src="@drawable/check_box_on"
                 android:contentDescription="Task icon"
-                app:tint="@color/task_header_text" />
+                app:tint="@color/primary_accent" />
 
 
             <TextView
@@ -60,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Tasks"
-                android:textColor="@color/task_header_text"
+                android:textColor="@color/primary_text"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -106,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="No tasks for this day"
-                android:textColor="#80000000"
+                android:textColor="@color/colorGrey"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>

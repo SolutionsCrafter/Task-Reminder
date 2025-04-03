@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7FA"
+    android:background="@color/primary_background"
     tools:context=".addTask">
 
     <!-- Glassmorphic Background Container -->
@@ -92,6 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@drawable/task_gradient_background"
             android:padding="16dp">
 
             <!-- Task Name Input -->
@@ -99,6 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:background="@drawable/completion_bg"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -106,6 +108,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Task Name"
+                    android:textColor="@color/primary_text"
+                    android:textColorHint="@color/secondary_text"
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,6 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:background="@drawable/completion_bg"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -121,6 +126,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Select Date"
+                    android:textColor="@color/primary_text"
+                    android:textColorHint="@color/secondary_text"
                     android:drawableEnd="@drawable/calendar"
                     android:clickable="true"
                     android:focusable="false"/>
@@ -130,6 +137,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/completion_bg"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -137,6 +145,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Select Time"
+                    android:textColor="@color/primary_text"
+                    android:textColorHint="@color/secondary_text"
                     android:drawableEnd="@drawable/time_filled"
                     android:clickable="true"
                     android:focusable="false"/>
@@ -152,7 +162,7 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginHorizontal="24dp"
-        android:backgroundTint="#3A6EA5"
+        android:backgroundTint="@color/primary_accent"
         android:text="Create Task"
         android:textAllCaps="false"
         android:textSize="18sp"

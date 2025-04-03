@@ -50,10 +50,7 @@
 
     <color name="calendar_header_bg">#3F51B5</color>
     <color name="calendar_header_text">#FFFFFF</color>
-    <color name="selected_week_bg">#E8EAF6</color>
-    <color name="unfocused_date">#BDBDBD</color>
-    <color name="week_number">#3F51B5</color>
-    <color name="week_separator">#E0E0E0</color>
+
     <color name="task_header_text">#3F51B5</color>
     <color name="fab_background">#FF4081</color>
 
@@ -85,5 +82,11 @@
     <!-- Text and Icon Colors -->
     <color name="inactive_icons">#D1D5DB</color>  <!-- Light gray for inactive icons and text -->
     <color name="active_icons">#0D9488</color>  <!-- Teal for active icons and text -->
+
+    <color name="selected_week_bg">#FF4081</color>
+    <color name="unfocused_date">#B0BEC5</color>
+    <color name="week_number">#5C6BC0</color>
+    <color name="week_separator">#D1D1D1</color>
+
 
 </resources>
