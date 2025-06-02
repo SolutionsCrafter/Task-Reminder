@@ -20,11 +20,3 @@
 - **Android Support Libraries**: Ensures compatibility across different Android versions.
 - **Material 3 Design**: Modern design system for creating beautiful and user-friendly interfaces.
 
-## Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/SolutionCrafter/Task-Reminder-App.git
-
- 
