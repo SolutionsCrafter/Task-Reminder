@@ -1,6 +1,6 @@
-# College Alerts App
+# Task Reminder App
 
-**College Alerts** is a task management Android application that allows users to add, edit, and delete tasks. It provides an easy way to keep track of important deadlines, events, and assignments. The app supports task filtering by date, stores tasks locally using SQLite, and integrates Material 3 design for a modern and sleek user experience.
+**Task Reminder** is a task management Android application that allows users to add, edit, and delete tasks. It provides an easy way to keep track of important deadlines, events, and assignments. The app supports task filtering by date, stores tasks locally using SQLite, and integrates Material 3 design for a modern and sleek user experience.
 
 ## Features
 
