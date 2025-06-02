@@ -25,6 +25,6 @@
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/SolutionCrafter/College-Alert-App.git
+   git clone https://github.com/SolutionCrafter/Task-Reminder-App.git
 
  
