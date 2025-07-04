@@ -1,19 +1,28 @@
 # 📌 Task Reminder App
 
-**Task Reminder** is a modern Android application that helps users manage their tasks, events, and deadlines efficiently. With local SQLite storage and Material 3 design, it offers a sleek and intuitive experience for staying organized.
+**Task Reminder** is a modern Android application that helps users manage tasks, events, and deadlines efficiently. With local SQLite storage and Material 3 design, it offers a sleek and intuitive experience for staying organized.
 
 ---
 
 ## ✨ Features
 
-| Feature            | Description                                                                      | Screenshot |
-|--------------------|----------------------------------------------------------------------------------|------------|
-| ✅ **Add Tasks**    | Add a new task with a title, date, and time.                                     | ![Add Task](https://github.com/user-attachments/assets/6db6bcd0-227c-43d6-b1f2-b01374ed98c0) |
-| 📋 **View Tasks**   | See all your tasks in a clean, scrollable list.                                  | ![View Tasks](screenshots/view_tasks.png) |
-| ✏️ **Edit Tasks**   | Modify existing tasks quickly and easily.                                        | ![Edit Task](screenshots/edit_task.png) |
-| 🗑️ **Delete Tasks** | Remove tasks with a confirmation dialog to prevent accidental deletion.          | ![Delete Task](screenshots/delete_task.png) |
-| 📅 **Filter by Date** | Filter tasks to view only those due on a selected date.                          | ![Filter Task](screenshots/filter_tasks.png) |
-| 💾 **Offline Storage** | Task data is stored locally using SQLite, so it's available even after closing the app. | ![Storage](screenshots/sqlite_storage.png) |
+### ✅ Add Tasks  
+![Add Task]![WhatsApp Image 2025-07-04 at 11 21 50_b16cbefd](https://github.com/user-attachments/assets/2e924239-975c-4bbe-8216-c4ed48b95f81)
+
+### 📋 View Tasks  
+![View Tasks](screenshots/view_tasks.png)
+
+### ✏️ Edit Tasks  
+![Edit Task](screenshots/edit_task.png)
+
+### 🗑️ Delete Tasks  
+![Delete Task](screenshots/delete_task.png)
+
+### 📅 Filter Tasks by Date  
+![Filter Task](screenshots/filter_tasks.png)
+
+### 💾 Offline Data Storage using SQLite  
+![SQLite Storage](screenshots/sqlite_storage.png)
 
 ---
 
