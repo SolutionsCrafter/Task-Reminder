@@ -1,22 +1,35 @@
-# Task Reminder App
+# 📌 Task Reminder App
 
-**Task Reminder** is a task management Android application that allows users to add, edit, and delete tasks. It provides an easy way to keep track of important deadlines, events, and assignments. The app supports task filtering by date, stores tasks locally using SQLite, and integrates Material 3 design for a modern and sleek user experience.
+**Task Reminder** is a modern Android application that helps users manage their tasks, events, and deadlines efficiently. With local SQLite storage and Material 3 design, it offers a sleek and intuitive experience for staying organized.
 
-## Features
+---
 
-- **Add Tasks**: Users can add tasks with a title, date, and time.
-- **Display Tasks**: Tasks are displayed in a list with their title, date, and time.
-- **Edit Tasks**: Allows users to modify existing tasks.
-- **Delete Tasks**: Provides a confirmation dialog before removing a task from the list.
-- **Filter Tasks by Date**: Tasks can be filtered and displayed based on the selected date.
-- **Save Data Locally**: Task data is stored locally in an SQLite database, ensuring tasks are saved even when the app is closed.
+## ✨ Features
 
-## Technologies Used
+| Feature            | Description                                                                      | Screenshot |
+|--------------------|----------------------------------------------------------------------------------|------------|
+| ✅ **Add Tasks**    | Add a new task with a title, date, and time.                                     | ![Add Task](https://github.com/user-attachments/assets/6db6bcd0-227c-43d6-b1f2-b01374ed98c0) |
+| 📋 **View Tasks**   | See all your tasks in a clean, scrollable list.                                  | ![View Tasks](screenshots/view_tasks.png) |
+| ✏️ **Edit Tasks**   | Modify existing tasks quickly and easily.                                        | ![Edit Task](screenshots/edit_task.png) |
+| 🗑️ **Delete Tasks** | Remove tasks with a confirmation dialog to prevent accidental deletion.          | ![Delete Task](screenshots/delete_task.png) |
+| 📅 **Filter by Date** | Filter tasks to view only those due on a selected date.                          | ![Filter Task](screenshots/filter_tasks.png) |
+| 💾 **Offline Storage** | Task data is stored locally using SQLite, so it's available even after closing the app. | ![Storage](screenshots/sqlite_storage.png) |
 
-- **Kotlin**: The programming language used to develop the app.
-- **RecyclerView**: Used for displaying the list of tasks in a scrollable view.
-- **SQLite Database**: Stores tasks locally on the device.
-- **Android SDK**: Provides the core functionality of the Android app.
-- **Android Support Libraries**: Ensures compatibility across different Android versions.
-- **Material 3 Design**: Modern design system for creating beautiful and user-friendly interfaces.
+---
 
+## 🛠 Technologies Used
+
+- **Kotlin** – Modern language for Android development  
+- **SQLite** – Local storage for persistent task saving  
+- **RecyclerView** – Efficient and scrollable task list UI  
+- **Android SDK** – Core Android development tools  
+- **AndroidX Libraries** – Compatibility support for various Android versions  
+- **Material 3 Design** – Google's latest design system for beautiful UI
+
+---
+
+## 🚀 Getting Started
+
+### Clone the Repository
+```bash
+git clone https://github.com/your-username/task-reminder-app.git
