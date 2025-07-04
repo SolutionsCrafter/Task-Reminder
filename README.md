@@ -7,7 +7,7 @@
 ## ✨ Features
 
 ### ✅ Add Tasks  
-![Add Task]![WhatsApp Image 2025-07-04 at 11 21 50_b16cbefd](https://github.com/user-attachments/assets/2e924239-975c-4bbe-8216-c4ed48b95f81)
+<img src="https://github.com/user-attachments/assets/2e924239-975c-4bbe-8216-c4ed48b95f81" width="300"/>
 
 ### 📋 View Tasks  
 ![View Tasks](screenshots/view_tasks.png)
