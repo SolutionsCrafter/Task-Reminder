@@ -7,27 +7,27 @@
 ## ✨ Features
 
 ### ✅ Add Tasks  
-    <img src="https://github.com/user-attachments/assets/2e924239-975c-4bbe-8216-c4ed48b95f81" width="300"/>
+<img src="https://github.com/user-attachments/assets/2e924239-975c-4bbe-8216-c4ed48b95f81" width="300"/>
 
 
 
 ### 📋 View Tasks  
-    <img src="https://github.com/user-attachments/assets/2942f7e0-be30-4661-b8d4-85936c0df9a1" width="300"/>
+<img src="https://github.com/user-attachments/assets/2942f7e0-be30-4661-b8d4-85936c0df9a1" width="300"/>
 
 
 
 ### ✏️ Edit Tasks  
-    <img src="https://github.com/user-attachments/assets/9e74f319-7210-4641-8012-bbb685651fcd" width="300"/>
+<img src="https://github.com/user-attachments/assets/9e74f319-7210-4641-8012-bbb685651fcd" width="300"/>
 
 
 
 ### 🗑️ Delete Tasks  
-    <img src="https://github.com/user-attachments/assets/97d37f9f-778f-4b4e-a427-601526b16316" width="300"/>
+<img src="https://github.com/user-attachments/assets/97d37f9f-778f-4b4e-a427-601526b16316" width="300"/>
 
 
 
 ### 📅 Filter Tasks by Date  
-    <img src="https://github.com/user-attachments/assets/b8f09611-e0c0-4260-8d6c-ad269e558380" width="300"/>
+<img src="https://github.com/user-attachments/assets/b8f09611-e0c0-4260-8d6c-ad269e558380" width="300"/>
 
 
 
